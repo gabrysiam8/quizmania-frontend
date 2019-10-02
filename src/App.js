@@ -1,12 +1,19 @@
-import React from 'react';
+import React , {Component} from 'react';
 import './App.css';
+import {
+    BrowserRouter as Router,
+    Switch
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>QUIZMANIA</h1>
-    </div>
-  );
+class App extends Component {
+    render() {
+        return (
+            <Router>
+                <Switch>
+                </Switch>
+            </Router>
+        );
+    }
 }
 
 export default App;
