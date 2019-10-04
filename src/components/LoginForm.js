@@ -1,5 +1,5 @@
-import React , {Component} from 'react';
-import AuthenticationService from '../service/AuthenticationService';
+import React, { Component } from "react";
+import AuthService from "../service/AuthService";
 
 class LoginForm extends Component {
 
@@ -24,15 +24,18 @@ class LoginForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const {username, password }= this.state;
-        AuthenticationService
+        const { username, password } = this.state;
+        const { history } = this.props;
+
+        AuthService
             .executeAuthenticationService(username, password)
             .then(res => {
-                AuthenticationService.registerSuccessfulLogin(username, res.data.token);
-                this.props.history.push('/');
+                AuthService.registerSuccessfulLogin(username, res.data.token);
+                this.props.userHasAuthenticated(true);
+                history.push('/');
             })
             .catch(err => {
-                alert(err.response.data);
+                console.log(err.response);
             });
     }
 
