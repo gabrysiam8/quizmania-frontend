@@ -7,6 +7,10 @@ import LoginForm from "./components/LoginForm";
 import StartPage from "./components/StartPage";
 import AppliedRoute from "./components/AppliedRoute";
 import MainMenu from "./components/MainMenu";
+import RegisterForm from "./components/RegisterForm";
+import ChangePasswordForm from "./components/ChangePasswordForm";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UserProfile from "./components/UserProfile";
 
 class App extends Component {
     constructor(props) {
@@ -46,7 +50,7 @@ class App extends Component {
                 <Switch>
                     <AppliedRoute path="/" exact component={StartPage} props={childProps}/>
                     <AppliedRoute path="/login" exact component={LoginForm} props={childProps}/>
-                    <AppliedRoute path="/register" exact component={LoginForm} props={childProps}/>
+                    <AppliedRoute path="/register" exact component={RegisterForm} props={childProps}/>
                 </Switch>
             </div>
         );
