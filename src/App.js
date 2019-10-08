@@ -51,6 +51,8 @@ class App extends Component {
                     <AppliedRoute path="/" exact component={StartPage} props={childProps}/>
                     <AppliedRoute path="/login" exact component={LoginForm} props={childProps}/>
                     <AppliedRoute path="/register" exact component={RegisterForm} props={childProps}/>
+                    <AuthenticatedRoute path="/user/me/password" exact component={ChangePasswordForm}/>
+                    <AuthenticatedRoute path="/user/me" exact component={UserProfile}/>
                 </Switch>
             </div>
         );
