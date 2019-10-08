@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import AuthService from "../service/AuthService";
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            email: "",
             username: "",
             password: ""
         };
@@ -24,32 +25,31 @@ class LoginForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const { username, password } = this.state;
+        const { email, username, password } = this.state;
         const { history } = this.props;
 
         AuthService
-            .login(username, password)
-            .then(res => {
-                AuthService.registerSuccessfulLogin(username, res.data.token);
-                this.props.userHasAuthenticated(true);
-                history.push('/');
+            .register(email, username, password)
+            .then(() => {
+                history.push('/login');
             })
             .catch(err => {
-                console.log(err.response);
+                alert(err.response.data);
             });
     }
 
     render() {
         return (
-            <div className="LoginForm">
+            <div className="RegisterForm">
                 <form onSubmit={this.handleSubmit}>
+                    <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required/> <br/>
                     <input type="text" name="username" value={this.state.username} onChange={this.handleChange} required/> <br/>
                     <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required/> <br/>
-                    <input type="submit" value="Log in"/>
+                    <input type="submit" value="Register"/>
                 </form>
             </div>
         );
     }
 }
 
-export default LoginForm;
+export default RegisterForm;

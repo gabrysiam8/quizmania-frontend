@@ -2,12 +2,21 @@
     text-align: center;
 }
 
-.LoginForm {
+.LoginForm, .RegisterForm, .ChangePasswordForm {
     text-align: center;
-    margin: 250px 600px 250px 600px;
     border: solid 2px;
+    display: table;
+    padding: 5px;
+    margin: 50px auto auto;
 }
 
-.LoginForm input {
-    margin: 10px;
+.LoginForm input, .RegisterForm input, .ChangePasswordForm input {
+    margin-bottom: 25px;
+}
+
+.UserProfile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }

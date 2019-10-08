@@ -32,8 +32,8 @@ class MainMenu extends Component {
                         {this.props.isAuthenticated
                             ?
                             [
-                                <NavDropdown.Item href="/me">Profile</NavDropdown.Item>,
-                                <NavDropdown.Item href="/me/edit">Edit profile</NavDropdown.Item>,
+                                <NavDropdown.Item href="/user/me">Profile</NavDropdown.Item>,
+                                <NavDropdown.Item href="/user/me/password">Change password</NavDropdown.Item>,
                                 <NavDropdown.Divider />,
                                 <NavDropdown.Item onClick={this.props.onLogout}>Logout</NavDropdown.Item>
                             ]:[
