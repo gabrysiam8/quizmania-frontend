@@ -14,9 +14,24 @@
     margin-bottom: 25px;
 }
 
-.UserProfile {
+.UserProfile, .UserQuizPage {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    flex-direction: column;
+}
+
+.myCard {
+    padding: 20px;
+    align-items: center;
+}
+
+.card-img-top {
+    width: 150px;
+}
+
+.myButton {
+    position: fixed;
+    bottom: 5%;
 }

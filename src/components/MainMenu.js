@@ -14,7 +14,7 @@ class MainMenu extends Component {
                     ?
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/q">Your quizzes</Nav.Link>
+                        <Nav.Link href="/quiz">Your quizzes</Nav.Link>
                     </Nav>
                     : null
                 }
