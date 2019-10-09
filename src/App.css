@@ -2,7 +2,7 @@
     text-align: center;
 }
 
-.LoginForm, .RegisterForm, .ChangePasswordForm {
+.LoginForm, .RegisterForm, .ChangePasswordForm, .QuizForm{
     text-align: center;
     border: solid 2px;
     display: table;
@@ -10,7 +10,7 @@
     margin: 50px auto auto;
 }
 
-.LoginForm input, .RegisterForm input, .ChangePasswordForm input {
+.LoginForm input, .RegisterForm input, .ChangePasswordForm input, .QuizForm input {
     margin-bottom: 25px;
 }
 
