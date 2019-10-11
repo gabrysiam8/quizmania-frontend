@@ -1,16 +1,18 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import React , {Component} from "react";
-import "./App.css";
-import { Switch } from "react-router-dom";
-import AuthService from "./service/AuthService";
-import LoginForm from "./components/LoginForm";
-import StartPage from "./components/StartPage";
-import AppliedRoute from "./components/AppliedRoute";
-import MainMenu from "./components/MainMenu";
-import RegisterForm from "./components/RegisterForm";
-import ChangePasswordForm from "./components/ChangePasswordForm";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
-import UserProfile from "./components/UserProfile";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React , {Component} from 'react';
+import './App.css';
+import { Switch } from 'react-router-dom';
+import AuthService from './service/AuthService';
+import LoginForm from './components/LoginForm';
+import StartPage from './components/StartPage';
+import AppliedRoute from './components/AppliedRoute';
+import MainMenu from './components/MainMenu';
+import RegisterForm from './components/RegisterForm';
+import ChangePasswordForm from './components/ChangePasswordForm';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
+import UserProfile from './components/UserProfile';
+import UserQuizPage from './components/UserQuizPage';
+import QuizForm from './components/QuizForm';
 
 class App extends Component {
     constructor(props) {
@@ -53,6 +55,8 @@ class App extends Component {
                     <AppliedRoute path="/register" exact component={RegisterForm} props={childProps}/>
                     <AuthenticatedRoute path="/user/me/password" exact component={ChangePasswordForm}/>
                     <AuthenticatedRoute path="/user/me" exact component={UserProfile}/>
+                    <AuthenticatedRoute path="/quiz" exact component={UserQuizPage}/>
+                    <AuthenticatedRoute path="/quiz/add" exact component={QuizForm}/>
                 </Switch>
             </div>
         );

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Card } from "react-bootstrap";
-import API from "../utils/API";
+import React, { Component } from 'react';
+import { Card } from 'react-bootstrap';
+import API from '../utils/API';
 
 class UserProfile extends Component {
 
@@ -26,7 +26,7 @@ class UserProfile extends Component {
     render() {
         return (
             <div className="UserProfile">
-                <Card style={{ width: '18rem' }}>
+                <Card className="myCard">
                     <Card.Img variant="top" src={process.env.PUBLIC_URL + '/unknownUser.svg'} />
                     <Card.Body>
                         <Card.Title>{this.state.username}</Card.Title>

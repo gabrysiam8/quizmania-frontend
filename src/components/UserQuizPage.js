@@ -1,18 +1,22 @@
-import React , {Component} from 'react';
-import { Card } from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Button, Card } from 'react-bootstrap';
 import API from '../utils/API';
 
-class StartPage extends Component {
-
+class UserQuizPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             quizzes: []
         };
+        this.routeChange = this.routeChange.bind(this);
+    }
+
+    routeChange() {
+        this.props.history.push("/quiz/add");
     }
 
     componentDidMount() {
-        API.get('/quiz/all')
+        API.get('/quiz')
             .then(res => {
                 this.setState({ quizzes: res.data });
                 console.log(this.state.quizzes);
@@ -24,9 +28,9 @@ class StartPage extends Component {
 
     render() {
         return (
-            <div className="StartPage">
+            <div className="UserQuizPage">
                 <div className="title">
-                    <h1>DISCOVER QUIZZES</h1>
+                    <h1>YOUR QUIZZES</h1>
                 </div>
                 <div>
                     {this.state.quizzes.map(quiz =>
@@ -39,9 +43,10 @@ class StartPage extends Component {
                         </Card>
                     )}
                 </div>
+                <Button className="myButton" variant="success" size="lg" onClick={this.routeChange}>Dodaj quiz</Button>
             </div>
         );
     }
 }
 
-export default StartPage;
+export default UserQuizPage;

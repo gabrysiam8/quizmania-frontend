@@ -2,21 +2,35 @@
     text-align: center;
 }
 
-.LoginForm, .RegisterForm, .ChangePasswordForm {
+.LoginForm, .RegisterForm, .ChangePasswordForm, .QuizForm{
     text-align: center;
-    border: solid 2px;
     display: table;
     padding: 5px;
     margin: 50px auto auto;
 }
 
-.LoginForm input, .RegisterForm input, .ChangePasswordForm input {
+.LoginForm input, .RegisterForm input, .ChangePasswordForm input, .QuizForm input {
     margin-bottom: 25px;
 }
 
-.UserProfile {
+.UserProfile, .UserQuizPage, .StartPage {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    flex-direction: column;
+}
+
+.myCard {
+    padding: 20px;
+    align-items: center;
+}
+
+.card-img-top {
+    width: 150px;
+}
+
+.myButton {
+    position: fixed;
+    bottom: 5%;
 }

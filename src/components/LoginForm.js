@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import AuthService from "../service/AuthService";
+import React, { Component } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import AuthService from '../service/AuthService';
 
 class LoginForm extends Component {
 
@@ -41,12 +42,22 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div className="LoginForm">
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="username" value={this.state.username} onChange={this.handleChange} required/> <br/>
-                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required/> <br/>
-                    <input type="submit" value="Log in"/>
-                </form>
+            <div className="LoginForm" onSubmit={this.handleSubmit}>
+                <Form>
+                    <Form.Group controlId="username">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control required type="text" name="username" placeholder="Username" onChange={this.handleChange}/>
+                    </Form.Group>
+            
+                    <Form.Group controlId="password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control required type="password" name="password" placeholder="Password" onChange={this.handleChange}/>
+                    </Form.Group>
+                    
+                    <Button variant="primary" type="submit">
+                        Log in
+                    </Button>
+                </Form>
             </div>
         );
     }

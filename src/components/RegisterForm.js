@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import AuthService from "../service/AuthService";
+import React, { Component } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import AuthService from '../service/AuthService';
 
 class RegisterForm extends Component {
 
@@ -41,12 +42,26 @@ class RegisterForm extends Component {
     render() {
         return (
             <div className="RegisterForm">
-                <form onSubmit={this.handleSubmit}>
-                    <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required/> <br/>
-                    <input type="text" name="username" value={this.state.username} onChange={this.handleChange} required/> <br/>
-                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required/> <br/>
-                    <input type="submit" value="Register"/>
-                </form>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Group controlId="email">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control required type="email" name="email" placeholder="Enter e-mail" onChange={this.handleChange}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="username">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control required type="text" name="username" placeholder="Enter username" onChange={this.handleChange}/>
+                    </Form.Group>
+            
+                    <Form.Group controlId="password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control required type="password" name="password" placeholder="Password" onChange={this.handleChange}/>
+                    </Form.Group>
+                    
+                    <Button variant="primary" type="submit">
+                        Register
+                    </Button>
+                </Form>
             </div>
         );
     }

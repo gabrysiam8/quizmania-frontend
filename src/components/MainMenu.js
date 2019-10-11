@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import React, { Component } from 'react';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 class MainMenu extends Component {
 
@@ -14,7 +14,7 @@ class MainMenu extends Component {
                     ?
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/q">Your quizzes</Nav.Link>
+                        <Nav.Link href="/quiz">Your quizzes</Nav.Link>
                     </Nav>
                     : null
                 }

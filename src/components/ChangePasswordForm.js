@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import API from "../utils/API";
 
 class ChangePasswordForm extends Component {
@@ -41,15 +42,26 @@ class ChangePasswordForm extends Component {
     render() {
         return (
             <div className="ChangePasswordForm">
-                <form onSubmit={this.handleSubmit}>
-                    <p>Old password:</p>
-                    <input type="password" name="oldPassword" value={this.state.oldPassword} onChange={this.handleChange} required/> <br/>
-                    <p>New password:</p>
-                    <input type="password" name="newPassword" value={this.state.newPassword} onChange={this.handleChange} required/> <br/>
-                    <p>New password confirmation:</p>
-                    <input type="password" name="passwordConfirmation" value={this.state.passwordConfirmation} onChange={this.handleChange} required/> <br/>
-                    <input type="submit" value="Change password"/>
-                </form>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Group controlId="oldPassword">
+                        <Form.Label>Old password</Form.Label>
+                        <Form.Control required type="password" name="oldPassword" placeholder="Old password" onChange={this.handleChange}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="newPassword">
+                        <Form.Label>New password</Form.Label>
+                        <Form.Control required type="password" name="newPassword" placeholder="New password" onChange={this.handleChange}/>
+                    </Form.Group>
+            
+                    <Form.Group controlId="password">
+                        <Form.Label>Password confirmation</Form.Label>
+                        <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" onChange={this.handleChange}/>
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                        Change password
+                    </Button>
+                </Form>
             </div>
         );
     }
