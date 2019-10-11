@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Card } from "react-bootstrap";
-import API from "../utils/API";
+import React, { Component } from 'react';
+import { Card } from 'react-bootstrap';
+import API from '../utils/API';
 
 class UserProfile extends Component {
 

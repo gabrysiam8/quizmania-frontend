@@ -1,18 +1,18 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import React , {Component} from "react";
-import "./App.css";
-import { Switch } from "react-router-dom";
-import AuthService from "./service/AuthService";
-import LoginForm from "./components/LoginForm";
-import StartPage from "./components/StartPage";
-import AppliedRoute from "./components/AppliedRoute";
-import MainMenu from "./components/MainMenu";
-import RegisterForm from "./components/RegisterForm";
-import ChangePasswordForm from "./components/ChangePasswordForm";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
-import UserProfile from "./components/UserProfile";
-import UserQuizPage from "./components/UserQuizPage";
-import QuizForm from "./components/QuizForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React , {Component} from 'react';
+import './App.css';
+import { Switch } from 'react-router-dom';
+import AuthService from './service/AuthService';
+import LoginForm from './components/LoginForm';
+import StartPage from './components/StartPage';
+import AppliedRoute from './components/AppliedRoute';
+import MainMenu from './components/MainMenu';
+import RegisterForm from './components/RegisterForm';
+import ChangePasswordForm from './components/ChangePasswordForm';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
+import UserProfile from './components/UserProfile';
+import UserQuizPage from './components/UserQuizPage';
+import QuizForm from './components/QuizForm';
 
 class App extends Component {
     constructor(props) {
