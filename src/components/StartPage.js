@@ -1,6 +1,6 @@
 import React , {Component} from 'react';
-import { Card } from 'react-bootstrap';
 import API from '../utils/API';
+import QuizCard from './QuizCard';
 
 class StartPage extends Component {
 
@@ -15,7 +15,6 @@ class StartPage extends Component {
         API.get('/quiz/all')
             .then(res => {
                 this.setState({ quizzes: res.data });
-                console.log(this.state.quizzes);
             })
             .catch(err => {
                 console.log(err.response);
@@ -25,18 +24,12 @@ class StartPage extends Component {
     render() {
         return (
             <div className="StartPage">
-                <div className="title">
+                <div className="pageTitle">
                     <h1>DISCOVER QUIZZES</h1>
                 </div>
-                <div>
+                <div className="quizTable">
                     {this.state.quizzes.map(quiz =>
-                        <Card className="myCard">
-                            <Card.Img variant="top" src={process.env.PUBLIC_URL + '/questionMark.svg'} />
-                            <Card.Body>
-                                <Card.Title>{quiz.title}</Card.Title>
-                                <Card.Subtitle>{quiz.description}</Card.Subtitle>
-                            </Card.Body>
-                        </Card>
+                        <QuizCard quiz={quiz} editable={false}/>
                     )}
                 </div>
             </div>

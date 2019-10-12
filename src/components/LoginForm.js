@@ -36,7 +36,7 @@ class LoginForm extends Component {
                 history.push('/');
             })
             .catch(err => {
-                console.log(err.response);
+                this.props.userHasAuthenticated(false);
             });
     }
 

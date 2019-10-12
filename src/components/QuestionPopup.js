@@ -33,9 +33,9 @@ export class QuestionPopup extends Component {
         const newAnswers = this.state.answers.map((answer, aid) => {
             if (id !== aid) return answer;
             return value;
-          });
+        });
       
-          this.setState({ answers: newAnswers });
+        this.setState({ answers: newAnswers });
 
     }
 
@@ -59,10 +59,9 @@ export class QuestionPopup extends Component {
                             <Form.Group as={Row}>
                                 <Form.Label as="legend" column sm={2}>Answers</Form.Label>
                                 <Col sm={10}>
-                                    <AnswerForm id={0} handleRadioChange={this.handleRadioChange} handleAnswerChange={this.handleAnswerChange}/>
-                                    <AnswerForm id={1} handleRadioChange={this.handleRadioChange} handleAnswerChange={this.handleAnswerChange}/>
-                                    <AnswerForm id={2} handleRadioChange={this.handleRadioChange} handleAnswerChange={this.handleAnswerChange}/>
-                                    <AnswerForm id={3} handleRadioChange={this.handleRadioChange} handleAnswerChange={this.handleAnswerChange}/>
+                                    {Array.from(Array(4).keys()).map((idx) => 
+                                        <AnswerForm id={idx} handleRadioChange={this.handleRadioChange} handleAnswerChange={this.handleAnswerChange}/>
+                                    )}
                                 </Col>
                             </Form.Group>
                         </fieldset>
