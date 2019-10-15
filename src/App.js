@@ -13,6 +13,7 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import UserProfile from './components/UserProfile';
 import UserQuizPage from './components/UserQuizPage';
 import QuizForm from './components/QuizForm';
+import QuizPlay from './components/QuizPlay';
 
 class App extends Component {
     constructor(props) {
@@ -51,6 +52,7 @@ class App extends Component {
                 <MainMenu {...childProps}/>
                 <Switch>
                     <AppliedRoute path="/" exact component={StartPage} props={childProps}/>
+                    <AppliedRoute path="/play/:id" exact component={QuizPlay} props={childProps}/>
                     <AppliedRoute path="/login" exact component={LoginForm} props={childProps}/>
                     <AppliedRoute path="/register" exact component={RegisterForm} props={childProps}/>
                     <AuthenticatedRoute path="/user/me/password" exact component={ChangePasswordForm}/>

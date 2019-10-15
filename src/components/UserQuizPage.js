@@ -47,7 +47,7 @@ class UserQuizPage extends Component {
         return (
             <div className="UserQuizPage">
                 <div className="pageTitle">
-                    <h1>YOUR QUIZZES</h1>
+                    <h1>Your quizzes</h1>
                 </div>
                 <div>
                     {this.state.showAlert ?

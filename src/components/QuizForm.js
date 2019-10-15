@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import API from '../utils/API';
 import QuestionPopup from './QuestionPopup';
+import QuestionList from './QuestionList';
 
 class QuizForm extends Component {
     constructor(props) {
@@ -10,15 +11,19 @@ class QuizForm extends Component {
         this.state = {
             title: "",
             category: "",
+            description: "",
             level: "",
             isPublic: false,
             questionIds: [],
+            questions: [],
             allLevels: [],
             showModal: false
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleQuestionSave = this.handleQuestionSave.bind(this);
+        this.handleQuestionAdd = this.handleQuestionAdd.bind(this);
+        this.handleQuestionDelete = this.handleQuestionDelete.bind(this);
+        this.saveQuestion = this.saveQuestion.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.togglePopup = this.togglePopup.bind(this);
     }
@@ -33,29 +38,43 @@ class QuizForm extends Component {
         });
     }
 
-    handleQuestionSave(event, question) {
+    handleQuestionAdd(event, question) {
         event.preventDefault();
-        API
-            .post("/question", question)
-            .then(res => {
-                this.setState({
-                    questionIds: [...this.state.questionIds, res.data.id],
-                    showModal: !this.state.showModal
-                });
-            })
-            .catch(err => {
-                console.log(err.response);
+        
+        this.setState({
+            questions: [...this.state.questions, question],
+            showModal: !this.state.showModal
         });
     }
 
-    handleSubmit(event) {
+    handleQuestionDelete(event, question) {
         event.preventDefault();
-        const { history } = this.props;
+        
+        this.setState({
+            questions: this.state.questions.filter( q => q !== question )
+        });
+    }
 
-        console.log(this.state);
+    async saveQuestion(question) {
+        return API
+                .post("/question", question)
+                .then(res => {
+                    this.setState({questionIds: [...this.state.questionIds, res.data.id]})
+                });
+    }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+
+        for (const question of this.state.questions) {
+            await this.saveQuestion(question);
+          }
+
+        const { history } = this.props;
+        const { title, category, description, level, isPublic, questionIds } = this.state
 
         API
-            .post("/quiz", this.state)
+            .post("/quiz", { title, category, description, level, isPublic, questionIds })
             .then(res => {
                 alert("Quiz added");
                 history.push('/quiz');
@@ -69,7 +88,7 @@ class QuizForm extends Component {
         this.setState({
           showModal: !this.state.showModal
         });
-      }
+    }
 
     componentDidMount() {
         API
@@ -98,7 +117,7 @@ class QuizForm extends Component {
             
                     <Form.Group controlId="description">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" name="description" placeholder="Enter quiz description" onChange={this.handleChange}/>
+                        <Form.Control type="textarea" name="description" placeholder="Enter quiz description" onChange={this.handleChange}/>
                     </Form.Group>
 
                     <Form.Group controlId="level">
@@ -114,6 +133,9 @@ class QuizForm extends Component {
                         <Form.Check name="isPublic" type="checkbox" id="default-checkbox" label="Public" onChange={this.handleChange}/>
                     </Form.Group>
 
+                    <p>Questions:</p>
+                    <QuestionList questions={this.state.questions} handleQuestionDelete={this.handleQuestionDelete}/>
+
                     <Button variant="secondary" onClick={this.togglePopup}>
                         Add question
                     </Button>
@@ -123,8 +145,8 @@ class QuizForm extends Component {
                         Add
                     </Button>
                 </Form>
-                <Modal show={this.state.showModal} onHide={this.togglePopup}>
-                    <QuestionPopup handleQuestionSave={this.handleQuestionSave}/>
+                <Modal size="lg" show={this.state.showModal} onHide={this.togglePopup}>
+                    <QuestionPopup handleQuestionAdd={this.handleQuestionAdd}/>
                 </Modal>
             </div>
         );

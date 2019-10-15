@@ -25,7 +25,7 @@ class StartPage extends Component {
         return (
             <div className="StartPage">
                 <div className="pageTitle">
-                    <h1>DISCOVER QUIZZES</h1>
+                    <h1>Discover quizzes</h1>
                 </div>
                 <div className="quizTable">
                     {this.state.quizzes.map(quiz =>

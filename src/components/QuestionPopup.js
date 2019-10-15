@@ -46,7 +46,7 @@ export class QuestionPopup extends Component {
                     <Modal.Title>Add question</Modal.Title>
                 </Modal.Header>
                 
-                <Form onSubmit={(e) => this.props.handleQuestionSave(e, this.state)}>
+                <Form onSubmit={(e) => this.props.handleQuestionAdd(e, this.state)}>
                     <Modal.Body>
                         <Form.Group as={Row} controlId="question">
                             <Form.Label column sm={2}>Question</Form.Label>
