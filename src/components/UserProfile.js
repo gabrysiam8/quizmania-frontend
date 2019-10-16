@@ -26,7 +26,7 @@ class UserProfile extends Component {
     render() {
         return (
             <div className="UserProfile">
-                <Card className="myCard">
+                <Card className="userCard">
                     <Card.Img variant="top" src={process.env.PUBLIC_URL + '/unknownUser.svg'} />
                     <Card.Body>
                         <Card.Title>{this.state.username}</Card.Title>

@@ -44,7 +44,7 @@ class RegisterForm extends Component {
             <div className="RegisterForm">
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="email">
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label>E-mail</Form.Label>
                         <Form.Control required type="email" name="email" placeholder="Enter e-mail" onChange={this.handleChange}/>
                     </Form.Group>
 

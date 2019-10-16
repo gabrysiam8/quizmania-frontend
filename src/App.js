@@ -55,6 +55,7 @@ class App extends Component {
                     <AppliedRoute path="/play/:id" exact component={QuizPlay} props={childProps}/>
                     <AppliedRoute path="/login" exact component={LoginForm} props={childProps}/>
                     <AppliedRoute path="/register" exact component={RegisterForm} props={childProps}/>
+                    <AppliedRoute path="/confirmation?token=:confirmToken" exact component={LoginForm} props={childProps}/>
                     <AuthenticatedRoute path="/user/me/password" exact component={ChangePasswordForm}/>
                     <AuthenticatedRoute path="/user/me" exact component={UserProfile}/>
                     <AuthenticatedRoute path="/quiz" exact component={UserQuizPage}/>

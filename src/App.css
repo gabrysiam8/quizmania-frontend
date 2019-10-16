@@ -1,3 +1,7 @@
+body {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
 .LoginForm, .RegisterForm, .ChangePasswordForm, .QuizForm {
     text-align: center;
     display: table;
@@ -37,9 +41,10 @@
     margin: 20px;
 }
 
-.quizCard {
+.userCard, .quizCard {
     align-items: center;
     padding: 20px;
+    text-align: center;
 }
 
 .questionCard {

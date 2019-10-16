@@ -72,7 +72,7 @@ class UserQuizPage extends Component {
                     size="lg"
                     onClick={this.routeChange}
                 >
-                    Dodaj quiz
+                    Add quiz
                 </Button>
             </div>
         );
