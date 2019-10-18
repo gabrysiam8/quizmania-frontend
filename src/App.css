@@ -9,7 +9,7 @@ body {
     margin: 50px auto auto;
 }
 
-.QuizForm {
+.QuizForm, .AccountConfirmationPage {
     text-align: center;
     display: table;
     width: 30%;

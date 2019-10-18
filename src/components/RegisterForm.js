@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 import AuthService from '../service/AuthService';
 
 class RegisterForm extends Component {
@@ -10,11 +10,13 @@ class RegisterForm extends Component {
         this.state = {
             email: "",
             username: "",
-            password: ""
+            password: "",
+            showModal: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.togglePopup = this.togglePopup.bind(this);
     }
 
     handleChange(event) {
@@ -27,16 +29,24 @@ class RegisterForm extends Component {
         event.preventDefault();
 
         const { email, username, password } = this.state;
-        const { history } = this.props;
 
         AuthService
             .register(email, username, password)
             .then(() => {
-                history.push('/login');
+                this.setState({
+                    showModal: true
+                });
             })
             .catch(err => {
                 alert(err.response.data);
             });
+    }
+
+    togglePopup() {
+        this.setState({
+          showModal: !this.state.showModal
+        });
+        this.props.history.push('login');
     }
 
     render() {
@@ -62,6 +72,15 @@ class RegisterForm extends Component {
                         Register
                     </Button>
                 </Form>
+                <Modal size="lg" show={this.state.showModal} onHide={this.togglePopup}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Almost done...</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>A verification email was sent to: {this.state.email}.
+                        Open this email and click the link to activate your account.</p>
+                    </Modal.Body>
+                </Modal>
             </div>
         );
     }

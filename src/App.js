@@ -14,6 +14,7 @@ import UserProfile from './components/UserProfile';
 import UserQuizPage from './components/UserQuizPage';
 import QuizForm from './components/QuizForm';
 import QuizPlay from './components/QuizPlay';
+import AccountVerificationPage from './components/AccountVerificationPage';
 
 class App extends Component {
     constructor(props) {
@@ -55,7 +56,7 @@ class App extends Component {
                     <AppliedRoute path="/play/:id" exact component={QuizPlay} props={childProps}/>
                     <AppliedRoute path="/login" exact component={LoginForm} props={childProps}/>
                     <AppliedRoute path="/register" exact component={RegisterForm} props={childProps}/>
-                    <AppliedRoute path="/confirmation?token=:confirmToken" exact component={LoginForm} props={childProps}/>
+                    <AppliedRoute path="/confirmation" exact component={AccountVerificationPage}/>
                     <AuthenticatedRoute path="/user/me/password" exact component={ChangePasswordForm}/>
                     <AuthenticatedRoute path="/user/me" exact component={UserProfile}/>
                     <AuthenticatedRoute path="/quiz" exact component={UserQuizPage}/>
