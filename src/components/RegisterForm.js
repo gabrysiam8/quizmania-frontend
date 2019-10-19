@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap';
 import AuthService from '../service/AuthService';
+import PasswordStrengthBar from 'react-password-strength-bar'
 
 class RegisterForm extends Component {
 
@@ -11,6 +12,7 @@ class RegisterForm extends Component {
             email: "",
             username: "",
             password: "",
+            validated: false,
             showModal: false
         };
 
@@ -27,19 +29,28 @@ class RegisterForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+          event.stopPropagation();
+        } else {
+            const { email, username, password } = this.state;
 
-        const { email, username, password } = this.state;
-
-        AuthService
-            .register(email, username, password)
-            .then(() => {
-                this.setState({
-                    showModal: true
+            AuthService
+                .register(email, username, password)
+                .then(() => {
+                    this.setState({
+                        showModal: true
+                    });
+                })
+                .catch(err => {
+                    alert(err.response.data);
                 });
-            })
-            .catch(err => {
-                alert(err.response.data);
-            });
+        }
+    
+        this.setState({
+            validated: true
+        });
+
     }
 
     togglePopup() {
@@ -52,7 +63,7 @@ class RegisterForm extends Component {
     render() {
         return (
             <div className="RegisterForm">
-                <Form onSubmit={this.handleSubmit}>
+                <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group controlId="email">
                         <Form.Label>E-mail</Form.Label>
                         <Form.Control required type="email" name="email" placeholder="Enter e-mail" onChange={this.handleChange}/>
@@ -65,8 +76,10 @@ class RegisterForm extends Component {
             
                     <Form.Group controlId="password">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control required type="password" name="password" placeholder="Password" onChange={this.handleChange}/>
-                    </Form.Group>
+                        <Form.Control required type="password" name="password" placeholder="Password" minLength="4" onChange={this.handleChange}/>
+                        <PasswordStrengthBar password={this.state.password} />
+                        </Form.Group>
+                    
                     
                     <Button variant="primary" type="submit">
                         Register

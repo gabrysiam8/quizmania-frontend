@@ -27,7 +27,6 @@ export class AccountVerificationPage extends Component {
                 });
             })
             .catch(err => {
-                console.log(err.response.data)
                 this.setState({
                     message: err.response.data
                 });
@@ -39,7 +38,7 @@ export class AccountVerificationPage extends Component {
         return (
             <div className="AccountConfirmationPage">
                 {this.state.confirmed ?
-                    <Alert variant="success" bsPrefix="alert">
+                    <Alert variant="success">
                         <Alert.Heading>Account was successfully verified!</Alert.Heading>
                         <p>To log in to the application click <Alert.Link href="/login">here</Alert.Link>.</p>
                     </Alert>

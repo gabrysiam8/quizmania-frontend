@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import AuthService from '../service/AuthService';
 
 class LoginForm extends Component {
@@ -9,7 +9,9 @@ class LoginForm extends Component {
 
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            showMessage: false,
+            message: ""
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -37,12 +39,23 @@ class LoginForm extends Component {
             })
             .catch(err => {
                 this.props.userHasAuthenticated(false);
+                this.setState({
+                    showMessage: true,
+                    message: err.response.data
+                });
             });
     }
 
     render() {
         return (
             <div className="LoginForm" onSubmit={this.handleSubmit}>
+                {this.state.showMessage ? 
+                    <Alert variant="danger">
+                        <p>{this.state.message}</p>
+                    </Alert>
+                    :
+                    null
+                }
                 <Form>
                     <Form.Group controlId="username">
                         <Form.Label>Username</Form.Label>
