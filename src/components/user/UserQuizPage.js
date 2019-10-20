@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-import API from '../utils/API';
-import QuizCard from './QuizCard';
+import API from '../../utils/API';
+import QuizCard from '../common/QuizCard';
 
 class UserQuizPage extends Component {
     constructor(props) {

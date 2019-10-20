@@ -3,18 +3,18 @@ import React , {Component} from 'react';
 import './App.css';
 import { Switch } from 'react-router-dom';
 import AuthService from './service/AuthService';
-import LoginForm from './components/LoginForm';
-import StartPage from './components/StartPage';
-import AppliedRoute from './components/AppliedRoute';
-import MainMenu from './components/MainMenu';
-import RegisterForm from './components/RegisterForm';
-import ChangePasswordForm from './components/ChangePasswordForm';
-import AuthenticatedRoute from './components/AuthenticatedRoute';
-import UserProfile from './components/UserProfile';
-import UserQuizPage from './components/UserQuizPage';
-import QuizForm from './components/QuizForm';
-import QuizPlay from './components/QuizPlay';
-import AccountVerificationPage from './components/AccountVerificationPage';
+import LoginForm from './components/auth/LoginForm';
+import RegisterForm from './components/auth/RegisterForm';
+import AccountVerificationPage from './components/auth/AccountVerificationPage';
+import AppliedRoute from './components/route/AppliedRoute';
+import AuthenticatedRoute from './components/route/AuthenticatedRoute';
+import StartPage from './components/common/StartPage';
+import MainMenu from './components/common/MainMenu';
+import ChangePasswordForm from './components/user/ChangePasswordForm';
+import UserProfile from './components/user/UserProfile';
+import UserQuizPage from './components/user/UserQuizPage';
+import QuizForm from './components/quizAdd/QuizForm';
+import QuizPlay from './components/quizPlay/QuizPlay';
 
 class App extends Component {
     constructor(props) {

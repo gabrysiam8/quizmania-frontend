@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap';
-import AuthService from '../service/AuthService';
+import AuthService from '../../service/AuthService';
 import PasswordStrengthBar from 'react-password-strength-bar'
 
 class RegisterForm extends Component {

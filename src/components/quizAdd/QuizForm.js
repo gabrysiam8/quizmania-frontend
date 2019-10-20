@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button, Alert } from 'react-bootstrap';
-import API from '../utils/API';
+import API from '../../utils/API';
 import QuestionPopup from './QuestionPopup';
 import QuestionList from './QuestionList';
 
