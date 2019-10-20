@@ -49,13 +49,6 @@ class LoginForm extends Component {
     render() {
         return (
             <div className="LoginForm" onSubmit={this.handleSubmit}>
-                {this.state.showMessage ? 
-                    <Alert variant="danger">
-                        <p>{this.state.message}</p>
-                    </Alert>
-                    :
-                    null
-                }
                 <Form>
                     <Form.Group controlId="username">
                         <Form.Label>Username</Form.Label>
@@ -71,6 +64,13 @@ class LoginForm extends Component {
                         Log in
                     </Button>
                 </Form>
+                {this.state.showMessage ? 
+                    <Alert className="loginAlert" variant="danger">
+                        <p>{this.state.message}</p>
+                    </Alert>
+                    :
+                    null
+                }
             </div>
         );
     }

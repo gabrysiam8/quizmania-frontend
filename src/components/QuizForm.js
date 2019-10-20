@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { Modal, Form, Button, Alert } from 'react-bootstrap';
 import API from '../utils/API';
 import QuestionPopup from './QuestionPopup';
 import QuestionList from './QuestionList';
@@ -17,7 +17,9 @@ class QuizForm extends Component {
             questionIds: [],
             questions: [],
             allLevels: [],
-            showModal: false
+            showModal: false,
+            validated: false, 
+            showAlert: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -65,23 +67,31 @@ class QuizForm extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
+        const form = event.currentTarget;
+        if (form.checkValidity() === false || this.state.questions.length<1) {
+            event.stopPropagation();
+            this.setState({ showAlert: true});
+        } else {
+            for (const question of this.state.questions) {
+                await this.saveQuestion(question);
+            }
 
-        for (const question of this.state.questions) {
-            await this.saveQuestion(question);
-          }
+            const { history } = this.props;
+            const { title, category, description, level, isPublic, questionIds } = this.state
 
-        const { history } = this.props;
-        const { title, category, description, level, isPublic, questionIds } = this.state
-
-        API
-            .post("/quiz", { title, category, description, level, isPublic, questionIds })
-            .then(res => {
-                alert("Quiz added");
-                history.push('/quiz');
-            })
-            .catch(err => {
-                console.log(err.response);
-            });
+            API
+                .post("/quiz", { title, category, description, level, isPublic, questionIds })
+                .then(res => {
+                    alert("Quiz added");
+                    history.push('/quiz');
+                })
+                .catch(err => {
+                    console.log(err.response);
+                });
+        }
+        this.setState({
+            validated: true
+        });
     }
 
     togglePopup() {
@@ -104,7 +114,7 @@ class QuizForm extends Component {
     render() {
         return (
             <div className="QuizForm">
-                <Form onSubmit={this.handleSubmit}>
+                <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group controlId="title">
                         <Form.Label>Title</Form.Label>
                         <Form.Control required type="text" name="title" placeholder="Enter quiz title" onChange={this.handleChange}/>
@@ -148,6 +158,12 @@ class QuizForm extends Component {
                 <Modal size="lg" show={this.state.showModal} onHide={this.togglePopup}>
                     <QuestionPopup handleQuestionAdd={this.handleQuestionAdd}/>
                 </Modal>
+                {this.state.showAlert ?
+                    <Alert className="loginAlert" variant="danger">
+                        <p>Quiz must have title, category and at least one question!</p>
+                    </Alert>
+                    : null
+                }
             </div>
         );
     }

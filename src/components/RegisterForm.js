@@ -66,12 +66,12 @@ class RegisterForm extends Component {
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group controlId="email">
                         <Form.Label>E-mail</Form.Label>
-                        <Form.Control required type="email" name="email" placeholder="Enter e-mail" onChange={this.handleChange}/>
+                        <Form.Control required type="email" name="email" placeholder="E-mail" onChange={this.handleChange}/>
                     </Form.Group>
 
                     <Form.Group controlId="username">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control required type="text" name="username" placeholder="Enter username" onChange={this.handleChange}/>
+                        <Form.Control required type="text" name="username" placeholder="Username" onChange={this.handleChange}/>
                     </Form.Group>
             
                     <Form.Group controlId="password">

@@ -11,14 +11,16 @@ export class QuestionPopup extends Component {
             question: "",
             answers: [],
             answerCount: 2,
-            correctAnswer: 0,
+            correctAnswer: "",
             answersSaved: false,
             validated: false
         };
     
         this.handleQuestionChange = this.handleQuestionChange.bind(this);
         this.handleAnswerChange = this.handleAnswerChange.bind(this);
+        this.handleAnswerDelete= this.handleAnswerDelete.bind(this);
         this.handleAnswerSelect = this.handleAnswerSelect.bind(this);
+        this.handleAnswerAdd = this.handleAnswerAdd.bind(this);
         this.handleNext = this.handleNext.bind(this);
     }
 
@@ -35,8 +37,26 @@ export class QuestionPopup extends Component {
         this.setState({ answers: newAnswers });
     }
 
+    handleAnswerDelete(event) {  
+        const newAnswers = this.state.answers.slice();
+        newAnswers.pop();
+        this.setState({ 
+            answers: newAnswers,
+            answerCount: this.state.answerCount-1 
+        });
+    }
+
     handleAnswerSelect(event) {
         this.setState({ correctAnswer: event.target.value });
+    }
+
+    handleAnswerAdd(event) {
+        const newAnswers = this.state.answers.slice();
+        newAnswers.push('');
+        this.setState({ 
+            answers: newAnswers,
+            answerCount: this.state.answerCount+1 
+        });
     }
 
     handleNext(event) {
@@ -50,10 +70,6 @@ export class QuestionPopup extends Component {
         this.setState({
             validated: true
         });
-    }
-
-    handleAddAnswer(event) {
-        this.setState({ answerCount: this.state.answerCount+1 });
     }
 
     render() {
@@ -78,7 +94,8 @@ export class QuestionPopup extends Component {
                         <Modal.Footer>
                             <Button 
                                 variant="primary" 
-                                type="button" 
+                                type="button"
+                                disabled={this.state.correctAnswer===""}
                                 onClick={(e) => this.props.handleQuestionAdd(e, 
                                     {
                                         question: this.state.question, 
@@ -104,9 +121,12 @@ export class QuestionPopup extends Component {
                                     </Col>
                                 </Form.Group>
 
-                                <AnswerForm answerCount={this.state.answerCount} handleAnswerChange={this.handleAnswerChange}/>
-
-                                <Button variant="secondary" disabled={this.state.answerCount===4} onClick={this.handleAddAnswer.bind(this)}>Add answer</Button>
+                                <AnswerForm 
+                                    answerCount={this.state.answerCount} 
+                                    handleAnswerChange={this.handleAnswerChange}
+                                    handleAnswerDelete={this.handleAnswerDelete}
+                                    handleAnswerAdd={this.handleAnswerAdd}
+                                />
                             </Modal.Body>
                         
                             <Modal.Footer>
