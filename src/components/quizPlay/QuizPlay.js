@@ -92,7 +92,7 @@ class QuizPlay extends Component {
             <div className="QuizPlay">
                 {(this.state.actualQuestion > -1 && this.state.actualQuestion < this.state.questionIds.length) 
                 ?
-                    <QuestionPlay questionId={this.state.questionIds[this.state.actualQuestion]} handleNext={this.handleNext} play={true} userAnswer=""/>
+                    <QuestionPlay questionId={this.state.questionIds[this.state.actualQuestion]} handleNext={this.handleNext}/>
                 :
                     null
                 }

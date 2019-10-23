@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../utils/API';
-import QuestionPlay from './QuestionPlay';
+import QuestionScore from './QuestionScore';
 
 export class ScorePage extends Component {
     constructor(props) {
@@ -12,13 +12,9 @@ export class ScorePage extends Component {
         };
     }
 
-    renderQuestion() {
-
-    }
     componentDidMount() {
         API.get('/score/'+this.props.match.params.id)
             .then(res => {
-                // console.log(res.data)
                 this.setState({ userAnswers: res.data.userAnswers });
             })
             .catch(err => {
@@ -30,7 +26,7 @@ export class ScorePage extends Component {
         return (
             <div>
                 {Object.keys(this.state.userAnswers).map(id =>
-                    <QuestionPlay questionId={id} userAnswer={this.state.userAnswers[id]} handleNext={this.handleNext} play={false}/>
+                    <QuestionScore questionId={id} userAnswer={this.state.userAnswers[id]} play={false}/>
                 )}
             </div>
         )

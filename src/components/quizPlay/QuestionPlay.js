@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../utils/API';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export class QuestionPlay extends Component {
     constructor(props) {
@@ -11,7 +9,7 @@ export class QuestionPlay extends Component {
         this.state = {
             question: "",
             answers: [],
-            selectedAnswer: props.userAnswer
+            selectedAnswer: ""
         };
         this.handleAnswerChange = this.handleAnswerChange.bind(this);
     }
@@ -25,8 +23,7 @@ export class QuestionPlay extends Component {
             .then(res => {
                 this.setState({
                     question: res.data.question, 
-                    answers:res.data.answers, 
-                    selectedAnswer: this.props.play ? "": this.state.selectedAnswer 
+                    answers:res.data.answers
                 });
             })
             .catch(err => {
@@ -40,7 +37,6 @@ export class QuestionPlay extends Component {
     }
 
     componentDidMount() {
-        
         this.loadQuestion()
     }
 
@@ -61,7 +57,6 @@ export class QuestionPlay extends Component {
                                         value={answer} 
                                         onChange={this.handleAnswerChange} 
                                         checked={this.state.selectedAnswer===answer}
-                                        disabled={!this.props.play}
                                     />
                                     <label className="answerLabel" htmlFor={answer}>{answer}</label>
                                 </div>
@@ -69,10 +64,7 @@ export class QuestionPlay extends Component {
                     </Col>
                     </Form.Group>
                 </fieldset>
-                {this.props.play ?
-                    <Button onClick={(e) => this.props.handleNext(e, this.state.selectedAnswer)}>Next</Button>
-                    : null
-                }
+                <Button onClick={(e) => this.props.handleNext(e, this.state.selectedAnswer)}>Next</Button>
             </div>
         )
     }
