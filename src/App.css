@@ -103,7 +103,7 @@ input[type="radio"]{
     margin-top: 15px;
     border: 2px rgb(98, 98, 168) solid;
     border-radius: 5px;
-    transition: all .3s ease-out;
+    transition: all .1s ease-out;
 }
 input[type="radio"]:checked + label{ 
     background-color: rgba(2, 2, 248, 0.123);

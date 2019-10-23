@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import API from '../../utils/API';
 import { Button, Modal } from 'react-bootstrap';
 import QuestionPlay from './QuestionPlay';
+import ScorePopup from './ScorePopup';
 
 class QuizPlay extends Component {
     constructor(props) {
@@ -91,19 +92,13 @@ class QuizPlay extends Component {
             <div className="QuizPlay">
                 {(this.state.actualQuestion > -1 && this.state.actualQuestion < this.state.questionIds.length) 
                 ?
-                    <QuestionPlay questionId={this.state.questionIds[this.state.actualQuestion]} handleNext={this.handleNext}/>
+                    <QuestionPlay questionId={this.state.questionIds[this.state.actualQuestion]} handleNext={this.handleNext} play={true} userAnswer=""/>
                 :
                     null
                 }
                 {button}
                 <Modal show={this.state.showModal} onHide={this.togglePopup}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Your score</Modal.Title>
-                    </Modal.Header>
-                    
-                    <Modal.Body>
-                        <h1>{this.state.score.percentageScore} %</h1>
-                    </Modal.Body>
+                    <ScorePopup score={this.state.score}/>
                 </Modal>
             </div>
         )

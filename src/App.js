@@ -15,6 +15,7 @@ import UserProfile from './components/user/UserProfile';
 import UserQuizPage from './components/user/UserQuizPage';
 import QuizForm from './components/quizAdd/QuizForm';
 import QuizPlay from './components/quizPlay/QuizPlay';
+import ScorePage from './components/quizPlay/ScorePage';
 
 class App extends Component {
     constructor(props) {
@@ -53,7 +54,8 @@ class App extends Component {
                 <MainMenu {...childProps}/>
                 <Switch>
                     <AppliedRoute path="/" exact component={StartPage} props={childProps}/>
-                    <AppliedRoute path="/play/:id" exact component={QuizPlay} props={childProps}/>
+                    <AppliedRoute path="/play/:id" exact component={QuizPlay}/>
+                    <AppliedRoute path="/score/:id" exact component={ScorePage}/>
                     <AppliedRoute path="/login" exact component={LoginForm} props={childProps}/>
                     <AppliedRoute path="/register" exact component={RegisterForm} props={childProps}/>
                     <AppliedRoute path="/confirmation" exact component={AccountVerificationPage}/>
