@@ -8,7 +8,7 @@ export class AccountVerificationPage extends Component {
         super(props);
     
         this.state = {
-            waiting: true,
+            loading: true,
             confirmed: "",
             message: ""
         };
@@ -19,24 +19,25 @@ export class AccountVerificationPage extends Component {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true
         });
+        
         if(query.token) {
-            API.get('/auth/confirmation?token='+query.token)
-            .then(res => {
-                this.setState({
-                    confirmed: true,
-                    message: res.data
+            this.setState({ loading: true }, () => {
+                API.get('/auth/confirmation?token='+query.token)
+                .then(res => {
+                    this.setState({
+                        loading: false,
+                        confirmed: true,
+                        message: res.data
+                    });
+                })
+                .catch(err => {
+                    this.setState({
+                        loading: false,
+                        confirmed: false,
+                        message: err.response.data
+                    });
                 });
-            })
-            .catch(err => {
-                this.setState({
-                    confirmed: false,
-                    message: err.response.data
-                });
-            }, () => {
-                this.setState({
-                    waiting: false
-                });
-            });
+              });
         }
     }
 
@@ -54,7 +55,7 @@ export class AccountVerificationPage extends Component {
 
         return (
             <div className="AccountConfirmationPage">
-                {this.state.waiting ?
+                {this.state.loading ?
                     <Spinner animation="border" variant="info" />
                     :
                     alert
