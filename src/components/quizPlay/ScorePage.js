@@ -8,25 +8,48 @@ export class ScorePage extends Component {
     
         this.state = {
             scoreId: props.match.params.id,
-            userAnswers: {}
+            quizId: "",
+            userAnswers: {},
+            questions: []
         };
     }
 
+    async getScore(id) {
+        return API
+                .get('/score/'+id)
+                .then(res => {
+                    this.setState({ 
+                        userAnswers: res.data.userAnswers,
+                        quizId: res.data.quizId
+                    });
+                })
+                .catch(err => {
+                    console.log(err.response);
+                });
+    }
+
     componentDidMount() {
-        API.get('/score/'+this.props.match.params.id)
-            .then(res => {
-                this.setState({ userAnswers: res.data.userAnswers });
-            })
-            .catch(err => {
-                console.log(err.response);
+        this
+            .getScore(this.props.match.params.id)
+            .then(() => {
+                    API
+                        .get('/quiz/'+this.state.quizId+'/question')
+                        .then(res => {
+                            this.setState({
+                                questions: res.data
+                            });
+                        })
+                        .catch(err => {
+                            console.log(err.response);
+                        });
             });
     }
 
     render() {
         return (
             <div>
-                {Object.keys(this.state.userAnswers).map(id =>
-                    <QuestionScore questionId={id} userAnswer={this.state.userAnswers[id]} play={false}/>
+                {this.state.questions.map(q =>
+                    <QuestionScore question={q} userAnswer={this.state.userAnswers[q.id]}/>
                 )}
             </div>
         )
