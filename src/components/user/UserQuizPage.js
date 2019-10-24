@@ -8,7 +8,7 @@ class UserQuizPage extends Component {
         super(props);
         this.state = {
             quizzes: [],
-            showAlert: false
+            showDeleteAlert: false
         };
 
         this.routeChange = this.routeChange.bind(this);
@@ -26,7 +26,7 @@ class UserQuizPage extends Component {
                     return quiz.id !== id;
                 });
               
-                this.setState({ quizzes: updatedQuizzes, showAlert: true });
+                this.setState({ quizzes: updatedQuizzes, showDeleteAlert: true });
             })
             .catch(err => {
                 console.log(err.response);
@@ -44,18 +44,27 @@ class UserQuizPage extends Component {
     }
 
     render() {
+        const { history, location } = this.props;
+        var alert = null;
+        if(location.state) {
+            const alertVariant = location.state.quizAdded ? "success" : "danger";
+            alert = <Alert variant={alertVariant} onClose={() => history.replace({ pathname: "/quiz", state: "" })} dismissible>
+                        {location.state.message}
+                    </Alert>
+        }
+        else if(this.state.showDeleteAlert) {
+            alert = <Alert variant="danger" onClose={() => this.setState({ showDeleteAlert: false })} dismissible>
+                        Quiz deleted!
+                    </Alert>
+        }
+        
         return (
             <div className="UserQuizPage">
                 <div className="pageTitle">
                     <h1>Your quizzes</h1>
                 </div>
                 <div>
-                    {this.state.showAlert ?
-                        <Alert variant="danger" onClose={() => this.setState({ showAlert: false })} dismissible>
-                            Quiz deleted!
-                        </Alert>
-                        : null
-                    }
+                    {alert}
                 </div>
                 <div className="quizTable">
                     {this.state.quizzes.map(quiz =>

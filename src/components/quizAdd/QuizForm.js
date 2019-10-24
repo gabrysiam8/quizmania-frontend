@@ -19,7 +19,8 @@ class QuizForm extends Component {
             allLevels: [],
             showModal: false,
             validated: false, 
-            showAlert: false
+            showAlert: false,
+            showConfirmation: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -82,11 +83,22 @@ class QuizForm extends Component {
             API
                 .post("/quiz", { title, category, description, level, isPublic, questionIds })
                 .then(res => {
-                    alert("Quiz added");
-                    history.push('/quiz');
+                    history.push({
+                        pathname: '/quiz',
+                        state: { 
+                            quizAdded: true,
+                            message: "Quiz successfully added!"
+                        }
+                    });
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    history.push({
+                        pathname: '/quiz',
+                        state: { 
+                            quizAdded: false,
+                            message: "Failed to add quiz!"
+                        }
+                    });
                 });
         }
         this.setState({
@@ -162,6 +174,13 @@ class QuizForm extends Component {
                     <Alert className="loginAlert" variant="danger">
                         <p>Quiz must have title, category and at least one question!</p>
                     </Alert>
+                    : null
+                }
+                {this.state.showConfirmation ?
+                    <Modal size="sm" show={this.state.showConfirmation}>
+                        <Modal.Header closeButton></Modal.Header>
+                        <Modal.Body>Quiz successfully added!</Modal.Body>
+                    </Modal>
                     : null
                 }
             </div>
