@@ -3,7 +3,7 @@ import AuthService from '../service/AuthService';
 
 const fetchClient = () => {
     const defaultOptions = {
-        baseURL: "http://localhost:8090/api/"
+        baseURL: "https://quizmania-api.herokuapp.com/api/"
     };
 
     let instance = axios.create(defaultOptions);
