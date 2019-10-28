@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import prettyMilliseconds from 'pretty-ms';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import API from '../../utils/API';
 
 export class ResultTable extends Component {
@@ -48,8 +48,7 @@ export class ResultTable extends Component {
 
     render() {
         return (
-            <div className="userResult">
-                <h3>Your results</h3>
+            <div >
                 <Table responsive>
                     <thead>
                         <tr>
@@ -59,6 +58,7 @@ export class ResultTable extends Component {
                             <th>Percentage score</th>
                             <th>Start time</th>
                             <th>Elapsed time</th>
+                            <th>Quiz statistics</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,6 +71,13 @@ export class ResultTable extends Component {
                             <td>{score.percentageScore}</td>
                             <td>{start.toLocaleDateString() + " " + start.toLocaleTimeString()}</td>
                             <td>{prettyMilliseconds(score.elapsedTimeInMs)}</td>
+                            <td>
+                                <Button 
+                                    variant="outline-primary" 
+                                    href={"/statistics?scoreId="+score.id+"&quizId="+score.quizId}>
+                                    Statistics
+                                </Button>
+                            </td>
                         </tr>
                         }
                     )}

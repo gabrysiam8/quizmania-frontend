@@ -16,6 +16,8 @@ import UserQuizPage from './components/user/UserQuizPage';
 import QuizForm from './components/quizAdd/QuizForm';
 import QuizPlay from './components/quizPlay/QuizPlay';
 import ScorePage from './components/quizPlay/ScorePage';
+import UserResultPage from './components/user/UserResultPage';
+import UserStatisticsPage from './components/user/UserStatisticsPage';
 
 class App extends Component {
     constructor(props) {
@@ -62,6 +64,8 @@ class App extends Component {
                     <AuthenticatedRoute path="/user/me/password" exact component={ChangePasswordForm}/>
                     <AuthenticatedRoute path="/user/me" exact component={UserProfile}/>
                     <AuthenticatedRoute path="/quiz" exact component={UserQuizPage}/>
+                    <AuthenticatedRoute path="/result" exact component={UserResultPage}/>
+                    <AuthenticatedRoute path="/statistics" exact component={UserStatisticsPage}/>
                     <AuthenticatedRoute path="/quiz/add" exact component={QuizForm}/>
                 </Switch>
             </div>
