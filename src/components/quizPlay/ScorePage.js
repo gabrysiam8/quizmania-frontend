@@ -49,7 +49,7 @@ export class ScorePage extends Component {
         return (
             <div>
                 {this.state.questions.map(q =>
-                    <QuestionScore question={q} userAnswer={this.state.userAnswers[q.id]}/>
+                    <QuestionScore key={q.id} question={q} userAnswer={this.state.userAnswers[q.id]}/>
                 )}
             </div>
         )

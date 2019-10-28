@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import prettyMilliseconds from 'pretty-ms';
 import { Table } from 'react-bootstrap';
 import API from '../../utils/API';
 
@@ -56,16 +57,22 @@ export class ResultTable extends Component {
                             <th>Good answers</th>
                             <th>All answers</th>
                             <th>Percentage score</th>
+                            <th>Start time</th>
+                            <th>Elapsed time</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {this.state.scores.map(score => 
-                        <tr key={score.id}>
+                    {this.state.scores.map(score => {
+                        const start = new Date(score.startDate); 
+                        return <tr key={score.id}>
                             <td><a href={"/score/"+score.id}>{score.quizTitle}</a></td>
                             <td>{score.goodAnswers}</td>
                             <td>{score.allAnswers}</td>
                             <td>{score.percentageScore}</td>
+                            <td>{start.toLocaleDateString() + " " + start.toLocaleTimeString()}</td>
+                            <td>{prettyMilliseconds(score.elapsedTimeInMs)}</td>
                         </tr>
+                        }
                     )}
                     </tbody>
                 </Table>

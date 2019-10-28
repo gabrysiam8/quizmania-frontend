@@ -10,7 +10,7 @@ export class QuestionScore extends Component {
                 <fieldset>
                     <Col >
                         {question.answers.map((answer, id) => 
-                            <div>
+                            <div key={answer}>
                                 {answer===question.correctAnswer ?
                                     <label className="answerLabel goodAnswerLabel">{answer}</label>
                                     :

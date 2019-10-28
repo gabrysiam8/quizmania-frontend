@@ -12,6 +12,7 @@ class QuizPlay extends Component {
             quizId: props.match.params.id,
             questionIds: [],
             actualQuestion: -1,
+            startDate: {},
             userAnswers: {},
             showModal: false,
             score: {}
@@ -25,8 +26,10 @@ class QuizPlay extends Component {
 
     handleStart() {
         if(this.state.actualQuestion < this.state.questionIds.length-1)
-            this.setState(
-                { actualQuestion: this.state.actualQuestion+1 }
+            this.setState({ 
+                    actualQuestion: this.state.actualQuestion+1,
+                    startDate: Date.now()
+                }
             );
     }
 
@@ -47,9 +50,16 @@ class QuizPlay extends Component {
     }
 
     handleFinish() {
-        const { quizId, userAnswers } = this.state;
+        const { quizId, startDate, userAnswers } = this.state;
+        const newScore = {
+            quizId, 
+            startDate, 
+            endDate: Date.now(),
+            userAnswers
+        }
 
-        API.post('/score', { quizId, userAnswers })
+        API
+            .post('/score', newScore)
             .then(res => {
                 this.setState({
                     score: res.data,

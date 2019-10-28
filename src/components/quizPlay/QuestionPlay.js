@@ -41,7 +41,6 @@ export class QuestionPlay extends Component {
     }
 
     render() {
-        console.log(this.state.selectedAnswer)
         return (
             <div className="QuestionPlay">
                 <h1>{this.state.question}</h1>
@@ -49,7 +48,7 @@ export class QuestionPlay extends Component {
                     <Form.Group as={Row}>
                         <Col >
                             {this.state.answers.map((answer, id) => 
-                                <div>
+                                <div key={answer}>
                                     <input 
                                         type="radio" 
                                         name={this.state.question}
