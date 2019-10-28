@@ -119,4 +119,13 @@ input[type="radio"]:checked + label{
     background-color: rgba(255, 164, 164, 0.685);
     border: 2px red solid;
 }
+
+.scorePopup {
+    text-align: center;
+}
+
+.userResult {
+    text-align: center;
+    margin-top: 80px;
+}
   

@@ -24,21 +24,21 @@ class MainMenu extends Component {
                         null
                         :
                         [
-                            <Nav.Link href="/login">Login</Nav.Link>,
-                            <Nav.Link href="/register">Register</Nav.Link>
+                            <Nav.Link key="login" href="/login">Login</Nav.Link>,
+                            <Nav.Link key="register" href="/register">Register</Nav.Link>
                         ]
                     }
                     <NavDropdown title={<FontAwesomeIcon icon={faUser} color="white"/>} alignRight id="dropdown-menu-align-right">
                         {this.props.isAuthenticated
                             ?
                             [
-                                <NavDropdown.Item href="/user/me">Profile</NavDropdown.Item>,
-                                <NavDropdown.Item href="/user/me/password">Change password</NavDropdown.Item>,
-                                <NavDropdown.Divider />,
-                                <NavDropdown.Item onClick={this.props.onLogout}>Logout</NavDropdown.Item>
+                                <NavDropdown.Item key="profile" href="/user/me">Profile</NavDropdown.Item>,
+                                <NavDropdown.Item key="changePassword" href="/user/me/password">Change password</NavDropdown.Item>,
+                                <NavDropdown.Divider key="divider"/>,
+                                <NavDropdown.Item key="logout" onClick={this.props.onLogout}>Logout</NavDropdown.Item>
                             ]:[
-                                <NavDropdown.Item href="/login">Login</NavDropdown.Item>,
-                                <NavDropdown.Item href="/register">Register</NavDropdown.Item>
+                                <NavDropdown.Item key="login" href="/login">Login</NavDropdown.Item>,
+                                <NavDropdown.Item key="register" href="/register">Register</NavDropdown.Item>
                             ]
                         }
                     </NavDropdown>

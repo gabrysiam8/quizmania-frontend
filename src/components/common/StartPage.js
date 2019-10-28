@@ -29,7 +29,7 @@ class StartPage extends Component {
                 </div>
                 <div className="quizTable">
                     {this.state.quizzes.map(quiz =>
-                        <QuizCard quiz={quiz} editable={false}/>
+                        <QuizCard key={quiz.id} quiz={quiz} editable={false}/>
                     )}
                 </div>
             </div>

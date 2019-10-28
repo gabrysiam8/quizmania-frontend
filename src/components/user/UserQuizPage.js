@@ -69,6 +69,7 @@ class UserQuizPage extends Component {
                 <div className="quizTable">
                     {this.state.quizzes.map(quiz =>
                         <QuizCard 
+                            key={quiz.id}
                             quiz={quiz} 
                             editable={true}
                             onDelete = {this.handleQuizDelete}

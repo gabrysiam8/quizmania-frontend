@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import API from '../../utils/API';
+import ResultTable from './ResultTable';
 
 class UserProfile extends Component {
 
@@ -9,17 +10,31 @@ class UserProfile extends Component {
 
         this.state = {
             email: "",
-            username: ""
+            username: "",
+            scores: []
         };
     }
 
     componentDidMount() {
         API.get("/user/me")
             .then((res) => {
-                this.setState(res.data);
+                this.setState({
+                    email: res.data.email,
+                    username: res.data.username
+                });
             })
             .catch(err => {
-                alert(err.response.data);
+                console.log(err.response);
+            });
+
+        API.get("/score")
+            .then((res) => {
+                this.setState({
+                    scores: res.data
+                });
+            })
+            .catch(err => {
+                console.log(err.response);
             });
     }
 
@@ -33,6 +48,7 @@ class UserProfile extends Component {
                         <Card.Subtitle>{this.state.email}</Card.Subtitle>
                     </Card.Body>
                 </Card>
+                <ResultTable/>
             </div>
         );
     }

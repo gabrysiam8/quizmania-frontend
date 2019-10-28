@@ -10,14 +10,16 @@ export class ScorePopup extends Component {
     }
 
     render() {
+        const { score } = this.props;
         return (
             <div>
                 <Modal.Header closeButton>
                     <Modal.Title>Your score</Modal.Title>
                 </Modal.Header>
                     
-                <Modal.Body>
-                    <h1>{this.props.score.percentageScore} %</h1>
+                <Modal.Body className="scorePopup">
+                    <h1>Points</h1>
+                    <h2>{score.goodAnswers}/{score.allAnswers} ({score.percentageScore} %)</h2>
                 </Modal.Body>
 
                 <Modal.Footer>

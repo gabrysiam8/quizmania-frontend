@@ -71,7 +71,7 @@ class QuizForm extends Component {
         const form = event.currentTarget;
         if (form.checkValidity() === false || this.state.questions.length<1) {
             event.stopPropagation();
-            this.setState({ showAlert: true});
+            this.setState({ showAlert: true });
         } else {
             for (const question of this.state.questions) {
                 await this.saveQuestion(question);
@@ -88,7 +88,7 @@ class QuizForm extends Component {
                         state: { 
                             quizAdded: true,
                             message: "Quiz successfully added!"
-                        }
+                            }
                     });
                 })
                 .catch(err => {
