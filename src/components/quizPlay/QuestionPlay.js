@@ -63,7 +63,12 @@ export class QuestionPlay extends Component {
                     </Col>
                     </Form.Group>
                 </fieldset>
-                <Button onClick={(e) => this.props.handleNext(e, this.state.selectedAnswer)}>Next</Button>
+                <Button 
+                    variant="outline-dark"
+                    onClick={(e) => this.props.handleNext(e, this.state.selectedAnswer)}
+                    disabled={this.state.selectedAnswer===""}>
+                    Next
+                </Button>
             </div>
         )
     }

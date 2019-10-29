@@ -1,5 +1,15 @@
 body {
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-family: 'Arbutus Slab'; 
+    font-size: 16px;
+}
+
+.logo {
+    font-size: 25px;
+    text-shadow: 4px 3px 0px #7A7A7A;
+}
+
+.logoPart {
+    color: greenyellow;
 }
 
 .LoginForm, .RegisterForm, .ChangePasswordForm, .QuizForm {
@@ -119,7 +129,7 @@ input[type="radio"]{
 }
 
 input[type="radio"]:checked + label{ 
-    background-color: rgba(2, 2, 248, 0.123);
+    background-color: rgba(172, 255, 47, 0.466);
 }
 
 .goodAnswerLabel {
@@ -143,5 +153,5 @@ input[type="radio"]:checked + label{
 
 .pageTitle {
     margin: 20px auto;
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.288);
+    text-shadow: 2px 1px 0px rgb(190, 190, 190);
 }

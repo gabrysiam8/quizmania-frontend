@@ -9,7 +9,7 @@ class MainMenu extends Component {
 
         return (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="/">Quizmania</Navbar.Brand>
+                <Navbar.Brand className="logo" href="/"><span className="logoPart">QUIZ</span>MANIA</Navbar.Brand>
                 {this.props.isAuthenticated
                     ?
                     <Nav className="mr-auto">

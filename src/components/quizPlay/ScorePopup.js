@@ -23,7 +23,7 @@ export class ScorePopup extends Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="primary" onClick={this.handleShowAnswers.bind(this)}>Show correct answers</Button>
+                    <Button variant="dark" onClick={this.handleShowAnswers.bind(this)}>Show correct answers</Button>
                 </Modal.Footer>
             </div>
         )

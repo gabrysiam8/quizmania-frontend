@@ -94,9 +94,9 @@ class QuizPlay extends Component {
     render() {
         let button = null;
         if(this.state.actualQuestion === -1)
-            button = <Button onClick={this.handleStart}>Start</Button>;
+            button = <Button variant="success" onClick={this.handleStart}>Start</Button>;
         if(this.state.actualQuestion === this.state.questionIds.length) 
-            button = <Button onClick={this.handleTryAgain}>Try again</Button>;
+            button = <Button variant="dark" onClick={this.handleTryAgain}>Try again</Button>;
 
         return (
             <div className="QuizPlay">

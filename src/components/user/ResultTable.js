@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import prettyMilliseconds from 'pretty-ms';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Spinner } from 'react-bootstrap';
 import API from '../../utils/API';
 
 export class ResultTable extends Component {
@@ -9,6 +9,7 @@ export class ResultTable extends Component {
         super(props);
 
         this.state = {
+            loading: true,
             scores: []
         };
     }
@@ -27,28 +28,35 @@ export class ResultTable extends Component {
     }
 
     componentDidMount() {
-        this
-            .getScores()
-            .then(() => {
-                this.state.scores.forEach(score => {
-                    API
-                        .get("/quiz/"+score.quizId+"?fields=title")
-                        .then((res) => {
-                            this.setState(prevState => ({
-                                scores: prevState.scores.map(s => 
-                                    s.id === score.id ? { ...s, quizTitle: res.data.title }: s)
-                            }));
-                        })
-                        .catch(err => {
-                            console.log(err.response);
-                        });
+        this.setState({ loading: true }, () => {
+            this
+                .getScores()
+                .then(() => {
+                    this.state.scores.forEach((score,index) => {
+                        const loadingFlag = index===this.state.scores.length-1;
+                        API
+                            .get("/quiz/"+score.quizId+"?fields=title")
+                            .then((res) => {
+                                this.setState(prevState => ({
+                                    loading: loadingFlag ? false : prevState.loading,
+                                    scores: prevState.scores.map(s => 
+                                        s.id === score.id ? { ...s, quizTitle: res.data.title }: s)
+                                }));
+                            })
+                            .catch(err => {
+                                console.log(err.response);
+                            });
+                    });
                 })
-            });
+        });
     }
 
     render() {
         return (
             <div >
+            {this.state.loading ?
+                <Spinner animation="border" variant="info" />
+                :
                 <Table responsive>
                     <thead>
                         <tr>
@@ -65,7 +73,7 @@ export class ResultTable extends Component {
                     {this.state.scores.map(score => {
                         const start = new Date(score.startDate); 
                         return <tr key={score.id}>
-                            <td><a href={"/score/"+score.id}>{score.quizTitle}</a></td>
+                            <td>{score.quizTitle}</td>
                             <td>{score.goodAnswers}</td>
                             <td>{score.allAnswers}</td>
                             <td>{score.percentageScore}</td>
@@ -73,7 +81,7 @@ export class ResultTable extends Component {
                             <td>{prettyMilliseconds(score.elapsedTimeInMs)}</td>
                             <td>
                                 <Button 
-                                    variant="outline-primary" 
+                                    variant="outline-dark" 
                                     href={"/statistics?scoreId="+score.id+"&quizId="+score.quizId}>
                                     Statistics
                                 </Button>
@@ -83,6 +91,7 @@ export class ResultTable extends Component {
                     )}
                     </tbody>
                 </Table>
+            }
             </div>
         )
     }
