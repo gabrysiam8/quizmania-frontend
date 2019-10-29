@@ -76,7 +76,7 @@ body {
   
 .statisticCard {
     border: none;
-    width: 280px;
+    flex: 1;
 }
 
 .card-img-top {
@@ -146,12 +146,20 @@ input[type="radio"]:checked + label{
     text-align: center;
 }
 
-.statisticsCardsWrapper {
+.statisticsCardsWrapper, .chartsWrapper {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    margin: 20px;
+}
+
+.chart {
+    flex: 1;
 }
 
 .pageTitle {
     margin: 20px auto;
     text-shadow: 2px 1px 0px rgb(190, 190, 190);
 }
+

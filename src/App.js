@@ -17,7 +17,7 @@ import QuizForm from './components/quizAdd/QuizForm';
 import QuizPlay from './components/quizPlay/QuizPlay';
 import ScorePage from './components/quizPlay/ScorePage';
 import UserResultPage from './components/user/UserResultPage';
-import UserStatisticsPage from './components/user/UserStatisticsPage';
+import UserStatisticsPage from './components/statistics/UserStatisticsPage';
 
 class App extends Component {
     constructor(props) {
