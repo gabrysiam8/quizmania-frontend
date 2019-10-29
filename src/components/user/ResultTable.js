@@ -52,7 +52,9 @@ export class ResultTable extends Component {
                     const uniqIds = [...new Set(quizIds)];
 
                     const apiPromises = uniqIds.map((quizId) => this.getQuizTitle(quizId) );
-                    Promise.all(apiPromises).then(() => this.setState({ loading: false }));
+                    Promise
+                        .all(apiPromises)
+                        .then(() => this.setState({ loading: false }));
                 });
         });
     }

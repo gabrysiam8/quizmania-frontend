@@ -73,32 +73,33 @@ class QuizForm extends Component {
             event.stopPropagation();
             this.setState({ showAlert: true });
         } else {
-            for (const question of this.state.questions) {
-                await this.saveQuestion(question);
-            }
+            const apiPromises = this.state.questions.map((question) => this.saveQuestion(question));
+            Promise
+                .all(apiPromises)
+                .then(() => {
+                    const { history } = this.props;
+                    const { title, category, description, level, isPublic, questionIds } = this.state
 
-            const { history } = this.props;
-            const { title, category, description, level, isPublic, questionIds } = this.state
-
-            API
-                .post("/quiz", { title, category, description, level, isPublic, questionIds })
-                .then(res => {
-                    history.push({
-                        pathname: '/quiz',
-                        state: { 
-                            quizAdded: true,
-                            message: "Quiz successfully added!"
-                            }
-                    });
-                })
-                .catch(err => {
-                    history.push({
-                        pathname: '/quiz',
-                        state: { 
-                            quizAdded: false,
-                            message: "Failed to add quiz!"
-                        }
-                    });
+                    API
+                        .post("/quiz", { title, category, description, level, isPublic, questionIds })
+                        .then(res => {
+                            history.push({
+                                pathname: '/quiz',
+                                state: { 
+                                    quizAdded: true,
+                                    message: "Quiz successfully added!"
+                                    }
+                            });
+                        })
+                        .catch(err => {
+                            history.push({
+                                pathname: '/quiz',
+                                state: { 
+                                    quizAdded: false,
+                                    message: "Failed to add quiz!"
+                                }
+                            });
+                        });
                 });
         }
         this.setState({
