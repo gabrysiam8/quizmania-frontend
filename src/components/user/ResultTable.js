@@ -10,7 +10,8 @@ export class ResultTable extends Component {
 
         this.state = {
             loading: true,
-            scores: []
+            scores: [],
+            quizIdTitle: []
         };
     }
 
@@ -21,6 +22,21 @@ export class ResultTable extends Component {
                     this.setState({
                         scores: res.data
                     });
+                    return res.data;
+                })
+                .catch(err => {
+                    console.log(err.response);
+                });
+    }
+
+    async getQuizTitle(id) {
+        return API
+                .get("/quiz/"+id+"?fields=title")
+                .then((res) => {
+                    this.setState(prevState => ({
+                        scores: prevState.scores.map(s => 
+                            s.quizId === id ? { ...s, quizTitle: res.data.title }: s)
+                    }));
                 })
                 .catch(err => {
                     console.log(err.response);
@@ -31,23 +47,13 @@ export class ResultTable extends Component {
         this.setState({ loading: true }, () => {
             this
                 .getScores()
-                .then(() => {
-                    this.state.scores.forEach((score,index) => {
-                        const loadingFlag = index===this.state.scores.length-1;
-                        API
-                            .get("/quiz/"+score.quizId+"?fields=title")
-                            .then((res) => {
-                                this.setState(prevState => ({
-                                    loading: loadingFlag ? false : prevState.loading,
-                                    scores: prevState.scores.map(s => 
-                                        s.id === score.id ? { ...s, quizTitle: res.data.title }: s)
-                                }));
-                            })
-                            .catch(err => {
-                                console.log(err.response);
-                            });
-                    });
-                })
+                .then((scores) => {
+                    const quizIds= scores.map(score => score.quizId);
+                    const uniqIds = [...new Set(quizIds)];
+
+                    const apiPromises = uniqIds.map((quizId) => this.getQuizTitle(quizId) );
+                    Promise.all(apiPromises).then(() => this.setState({ loading: false }));
+                });
         });
     }
 
