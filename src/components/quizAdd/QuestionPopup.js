@@ -9,7 +9,7 @@ export class QuestionPopup extends Component {
     
         this.state = {
             question: "",
-            answers: [],
+            answers: ["",""],
             answerCount: 2,
             correctAnswer: "",
             answersSaved: false,
@@ -73,6 +73,7 @@ export class QuestionPopup extends Component {
     }
 
     render() {
+        console.log(this.state.answers)
         return (
             <div>
                 {this.state.answersSaved ?
