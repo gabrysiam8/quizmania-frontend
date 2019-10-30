@@ -8,6 +8,7 @@ class MainMenu extends Component {
     render() {
 
         return (
+            <div className="MainMenu">
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Navbar.Brand className="logo" href="/"><span className="logoPart">QUIZ</span>MANIA</Navbar.Brand>
                 {this.props.isAuthenticated
@@ -43,9 +44,9 @@ class MainMenu extends Component {
                             ]
                         }
                     </NavDropdown>
-
                 </Nav>
             </Navbar>
+            </div>
         );
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import qs from 'qs';
 import StatisticsTab from './StatisticsTab';
-import { Tabs, Tab } from 'react-bootstrap';
+import { Tab, Nav } from 'react-bootstrap';
 
 export class UserStatisticsPage extends Component {
     constructor(props) {
@@ -22,14 +22,24 @@ export class UserStatisticsPage extends Component {
                 <div className="pageTitle">
                     <h1>Quiz statistics</h1>
                 </div>
-                <Tabs defaultActiveKey="my" id="uncontrolled-tab-example">
-                    <Tab eventKey="my" title="My">
-                        <StatisticsTab global={false} quizId={query.quizId}/>
-                    </Tab>
-                    <Tab eventKey="global" title="Global">
-                        <StatisticsTab global={true} quizId={query.quizId}/>
-                    </Tab>
-                </Tabs>
+                <Tab.Container defaultActiveKey="my">
+                    <Nav variant="pills" className="flex-row">
+                        <Nav.Item>
+                        <Nav.Link eventKey="my">My</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                        <Nav.Link eventKey="global">Global</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                    <Tab.Content>
+                        <Tab.Pane eventKey="my">
+                            <StatisticsTab global={false} quizId={query.quizId}/>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="global">
+                            <StatisticsTab global={true} quizId={query.quizId}/>
+                        </Tab.Pane>
+                    </Tab.Content>
+                </Tab.Container>
             </div>
         )
     }

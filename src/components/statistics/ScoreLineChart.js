@@ -43,7 +43,7 @@ export class ScoreLineChart extends Component {
                     <YAxis type="number" allowDecimals={false}>
                         <Label  value="Number of attempts" angle={-90} position='insideLeft' style={{textAnchor: 'middle'}}/>
                     </YAxis>
-                    <Line strokeWidth={4} type="monotone" dataKey="count" stroke="rgb(135, 224, 0)" />
+                    <Line strokeWidth={4} type="monotone" dataKey="count" stroke="#17a2b8" />
                 </LineChart>
             </div>
         )

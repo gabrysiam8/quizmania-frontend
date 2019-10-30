@@ -37,7 +37,7 @@ export class ScoreBarChart extends Component {
                     <YAxis >
                         <Label  value="Number of attempts" angle={-90} position='insideLeft' style={{textAnchor: 'middle'}}/>
                     </YAxis>
-                    <Bar dataKey="count" fill="rgb(135, 224, 0)" />
+                    <Bar dataKey="count" fill="#17a2b8" />
                 </BarChart>
             </div>
         )

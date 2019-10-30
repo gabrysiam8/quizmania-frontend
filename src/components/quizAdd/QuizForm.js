@@ -164,7 +164,7 @@ class QuizForm extends Component {
                     </Button>
                     <br/><br/>
 
-                    <Button variant="primary" type="submit">
+                    <Button variant="info" type="submit">
                         Add
                     </Button>
                 </Form>

@@ -89,7 +89,7 @@ export class ResultTable extends Component {
                             <td>{moment.duration(score.elapsedTimeInMs).asSeconds()+ ' s'}</td>
                             <td>
                                 <Button 
-                                    variant="outline-dark" 
+                                    variant="outline-info" 
                                     href={"/statistics?quizId="+score.quizId}>
                                     Statistics
                                 </Button>
