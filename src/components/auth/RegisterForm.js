@@ -81,7 +81,7 @@ class RegisterForm extends Component {
                         </Form.Group>
                     
                     
-                    <Button variant="primary" type="submit">
+                    <Button variant="info" type="submit">
                         Register
                     </Button>
                 </Form>

@@ -16,6 +16,10 @@ body {
     color: #1fc2db;
 }
 
+.dropdown-item:active {
+    background-color: #17a2b8;
+}
+
 .LoginForm, .RegisterForm, .ChangePasswordForm, .QuizForm {
     display: flex;
     flex-direction: column;
@@ -133,7 +137,7 @@ input[type="radio"]{
 }
 
 input[type="radio"]:checked + label{ 
-    background-color: rgba(172, 255, 47, 0.466);
+    background-color: #b7f5ff63;
 }
 
 .goodAnswerLabel {
@@ -166,7 +170,6 @@ input[type="radio"]:checked + label{
     margin: 20px auto;
     text-shadow: 2px 1px 0px rgb(190, 190, 190);
 }
-
 
 a {
     color: #17a2b8;

@@ -58,7 +58,7 @@ class ChangePasswordForm extends Component {
                         <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" onChange={this.handleChange}/>
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
+                    <Button variant="info" type="submit">
                         Change password
                     </Button>
                 </Form>

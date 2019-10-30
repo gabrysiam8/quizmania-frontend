@@ -73,7 +73,6 @@ export class QuestionPopup extends Component {
     }
 
     render() {
-        console.log(this.state.answers)
         return (
             <div>
                 {this.state.answersSaved ?
@@ -94,7 +93,7 @@ export class QuestionPopup extends Component {
 
                         <Modal.Footer>
                             <Button 
-                                variant="primary" 
+                                variant="info" 
                                 type="button"
                                 disabled={this.state.correctAnswer===""}
                                 onClick={(e) => this.props.handleQuestionAdd(e, 
