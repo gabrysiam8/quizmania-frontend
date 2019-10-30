@@ -9,7 +9,7 @@ export class ScoreBarChart extends Component {
             const start = i*10;
             const end = (i+1)*10-1;
             result.push({ 
-                name: start +"-"+end,
+                name: start + "-" + end,
                 count: 0
             })
         }

@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import qs from 'qs';
 import API from '../../utils/API';
 import StatisticCard from './StatisticCard';
-import prettyMilliseconds from 'pretty-ms';
 import { Spinner } from 'react-bootstrap';
 import ScoreBarChart from './ScoreBarChart';
 import ScoreLineChart from './ScoreLineChart';
+import moment from 'moment';
 
 export class UserStatisticsPage extends Component {
     constructor(props) {
@@ -16,7 +16,6 @@ export class UserStatisticsPage extends Component {
         });
         this.state = {
             loading: true,
-            scoreId: query.scoreId,
             quizId: query.quizId,
             globalStatistics: {}
         };
@@ -54,7 +53,7 @@ export class UserStatisticsPage extends Component {
                             <StatisticCard title="Average score" value={stats.averageScore + " %"}/>
                             <StatisticCard title="Best score" value={stats.bestScore + " %"}/>
                             <StatisticCard title="Worst score" value={stats.worstScore + " %"}/>
-                            <StatisticCard title="Average time" value={prettyMilliseconds(stats.averageTimeInMs)}/>
+                            <StatisticCard title="Average time" value={moment.duration(stats.averageTimeInMs).asSeconds()+ ' s'}/>
                         </div>
                         <div className="chartsWrapper">
                             <ScoreBarChart data={stats.scoreDtoList}/>

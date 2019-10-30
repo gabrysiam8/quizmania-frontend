@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import prettyMilliseconds from 'pretty-ms';
+import moment from 'moment';
 import { Table, Button, Spinner } from 'react-bootstrap';
 import API from '../../utils/API';
 
@@ -86,11 +86,11 @@ export class ResultTable extends Component {
                             <td>{score.allAnswers}</td>
                             <td>{score.percentageScore}</td>
                             <td>{start.toLocaleDateString() + " " + start.toLocaleTimeString()}</td>
-                            <td>{prettyMilliseconds(score.elapsedTimeInMs)}</td>
+                            <td>{moment.duration(score.elapsedTimeInMs).asSeconds()+ ' s'}</td>
                             <td>
                                 <Button 
                                     variant="outline-dark" 
-                                    href={"/statistics?scoreId="+score.id+"&quizId="+score.quizId}>
+                                    href={"/statistics?quizId="+score.quizId}>
                                     Statistics
                                 </Button>
                             </td>
