@@ -41,7 +41,7 @@ body {
     margin-bottom: 25px;
 }
 
-.UserProfile, .UserQuizPage, .StartPage, .QuizPlay, .QuestionPlay, .QuestionScore, .StatisticsPage {
+.UserProfile, .UserQuizPage, .StartPage, .QuizPlay, .QuestionPlay, .QuestionScore, .StatisticsPage, .ScorePage {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,7 +91,7 @@ body {
     width: 30%;
 }
 
-.addQuizButton {
+.addQuizButton, .goBackButton {
     position: fixed;
     bottom: 5%;
 }

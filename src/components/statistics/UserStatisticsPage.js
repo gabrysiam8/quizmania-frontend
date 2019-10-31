@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import qs from 'qs';
 import StatisticsTab from './StatisticsTab';
-import { Tab, Nav } from 'react-bootstrap';
+import { Tab, Nav, Button } from 'react-bootstrap';
 
 export class UserStatisticsPage extends Component {
-    
+
     render() {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true
@@ -32,6 +32,7 @@ export class UserStatisticsPage extends Component {
                         </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>
+                <Button className="goBackButton" variant="info" onClick={() => this.props.history.push("/result")}>Go back</Button>
             </div>
         )
     }

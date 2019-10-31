@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from '../../utils/API';
 import QuestionScore from './QuestionScore';
+import { Button } from 'react-bootstrap';
 
 export class ScorePage extends Component {
     constructor(props) {
@@ -12,6 +13,8 @@ export class ScorePage extends Component {
             userAnswers: {},
             questions: []
         };
+
+        this.handleTryAgain=this.handleTryAgain.bind(this);
     }
 
     async getScore(id) {
@@ -26,6 +29,10 @@ export class ScorePage extends Component {
                 .catch(err => {
                     console.log(err.response);
                 });
+    }
+
+    handleTryAgain() {
+        this.props.history.push("/play/"+this.state.quizId);    
     }
 
     componentDidMount() {
@@ -47,10 +54,11 @@ export class ScorePage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="ScorePage">
                 {this.state.questions.map(q =>
                     <QuestionScore key={q.id} question={q} userAnswer={this.state.userAnswers[q.id]}/>
                 )}
+                <Button variant="info" onClick={this.handleTryAgain}>Try again</Button>
             </div>
         )
     }
