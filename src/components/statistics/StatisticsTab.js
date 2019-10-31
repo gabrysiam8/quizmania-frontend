@@ -12,7 +12,7 @@ export class StatisticsTab extends Component {
 
         this.state = {
             loading: true,
-            statistics: {}
+            stats: {}
         };
     }
 
@@ -23,7 +23,7 @@ export class StatisticsTab extends Component {
                 .then(res => {
                     this.setState({
                         loading: false,
-                        statistics: res.data
+                        stats: res.data
                     });
                 })
                 .catch(err => {
@@ -33,10 +33,10 @@ export class StatisticsTab extends Component {
     }
 
     render() {
-        const stats = this.state.statistics;
+        const { loading, stats } = this.state;
         return (
             <div>
-                {this.state.loading ?
+                {loading ?
                     <Spinner animation="border" variant="info" />
                     :
                     <Fragment>

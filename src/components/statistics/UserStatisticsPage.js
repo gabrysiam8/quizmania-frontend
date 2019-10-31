@@ -4,19 +4,11 @@ import StatisticsTab from './StatisticsTab';
 import { Tab, Nav } from 'react-bootstrap';
 
 export class UserStatisticsPage extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            loading: true
-        };
-    }
-
+    
     render() {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true
         });
-        console.log(query);
         return (
             <div className="StatisticsPage">
                 <div className="pageTitle">
