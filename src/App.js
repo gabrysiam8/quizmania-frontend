@@ -13,11 +13,11 @@ import MainMenu from './components/common/MainMenu';
 import ChangePasswordForm from './components/user/ChangePasswordForm';
 import UserProfile from './components/user/UserProfile';
 import UserQuizPage from './components/user/UserQuizPage';
-import QuizForm from './components/quizAdd/QuizForm';
 import QuizPlay from './components/quizPlay/QuizPlay';
 import ScorePage from './components/quizPlay/ScorePage';
 import UserResultPage from './components/user/UserResultPage';
 import UserStatisticsPage from './components/statistics/UserStatisticsPage';
+import QuizAddPage from './components/quizAdd/QuizAddPage';
 
 class App extends Component {
     constructor(props) {
@@ -66,7 +66,7 @@ class App extends Component {
                     <AuthenticatedRoute path="/quiz" exact component={UserQuizPage}/>
                     <AuthenticatedRoute path="/result" exact component={UserResultPage}/>
                     <AuthenticatedRoute path="/statistics" exact component={UserStatisticsPage}/>
-                    <AuthenticatedRoute path="/quiz/add" exact component={QuizForm}/>
+                    <AuthenticatedRoute path="/quiz/add" exact component={QuizAddPage}/>
                 </Switch>
             </div>
         );

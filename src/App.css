@@ -41,6 +41,10 @@ body {
     margin-bottom: 25px;
 }
 
+.QuizAddPage {
+    text-align: center;
+}
+
 .UserProfile, .UserQuizPage, .StartPage, .QuizPlay, .QuestionPlay, .QuestionScore, .StatisticsPage, .ScorePage {
     display: flex;
     align-items: center;
@@ -78,8 +82,13 @@ body {
     text-align: center;
 }
 
+.questionCardsWrapper {
+    text-align: -webkit-center;
+}
+
 .questionCard {
     margin: 20px;
+    width: 70%;
 }
   
 .statisticCard {

@@ -6,7 +6,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 export class QuestionList extends Component {
     render() {
         return (
-            <div>
+            <div className="questionCardsWrapper">
                 {this.props.questions.map(question =>
                     <Card className="questionCard">
                         <Card.Body>
