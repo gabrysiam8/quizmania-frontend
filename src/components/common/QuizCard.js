@@ -8,6 +8,7 @@ export class QuizCard extends Component {
 
         this.routeChange = this.routeChange.bind(this);
     }
+    
     routeChange() {
         this.props.history.push("/play/"+this.props.quiz.id);
     }
