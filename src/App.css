@@ -60,7 +60,7 @@ body {
     text-align: center;
 }
 
-.loginAlert {
+.loginAlert, .registerAlert {
     margin-top: 20px;
 }
 

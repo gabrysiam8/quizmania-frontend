@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Modal } from 'react-bootstrap';
+import { Form, Button, Alert, Modal } from 'react-bootstrap';
 import AuthService from '../../service/AuthService';
 import PasswordStrengthBar from 'react-password-strength-bar'
 
@@ -13,7 +13,9 @@ class RegisterForm extends Component {
             username: "",
             password: "",
             validated: false,
-            showModal: false
+            showModal: false,
+            showMessage: false,
+            message: ""
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -43,7 +45,10 @@ class RegisterForm extends Component {
                     });
                 })
                 .catch(err => {
-                    alert(err.response.data);
+                    this.setState({
+                        showMessage: true,
+                        message: err.response.data
+                    });
                 });
         }
     
@@ -85,6 +90,13 @@ class RegisterForm extends Component {
                         Register
                     </Button>
                 </Form>
+                {this.state.showMessage ? 
+                    <Alert className="registerAlert" variant="danger">
+                        <p>{this.state.message}</p>
+                    </Alert>
+                    :
+                    null
+                }
                 <Modal size="lg" show={this.state.showModal} onHide={this.togglePopup}>
                     <Modal.Header closeButton>
                         <Modal.Title>Almost done...</Modal.Title>
