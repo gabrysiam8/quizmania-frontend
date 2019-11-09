@@ -60,7 +60,7 @@ class StartPage extends Component {
                                 <Nav.Link eventKey="ALL">ALL</Nav.Link>
                             </Nav.Item>
                             {levels.map(level => 
-                                <Nav.Item>
+                                <Nav.Item key={level}>
                                     <Nav.Link eventKey={level}>{level}</Nav.Link>
                                 </Nav.Item>
                             )}
@@ -74,7 +74,7 @@ class StartPage extends Component {
                                 </div>
                             </Tab.Pane>
                             {levels.map(level => 
-                                <Tab.Pane eventKey={level}>
+                                <Tab.Pane key={level} eventKey={level}>
                                     <div className="quizTable">
                                         {quizzes
                                             .filter(quiz => quiz.level === level)

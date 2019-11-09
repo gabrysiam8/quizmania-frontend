@@ -17,7 +17,7 @@ import QuizPlay from './components/quizPlay/QuizPlay';
 import ScorePage from './components/quizPlay/ScorePage';
 import UserResultPage from './components/user/UserResultPage';
 import UserStatisticsPage from './components/statistics/UserStatisticsPage';
-import QuizAddPage from './components/quizAdd/QuizAddPage';
+import QuizDetailsPage from './components/quizAdd/QuizDetailsPage';
 
 class App extends Component {
     constructor(props) {
@@ -66,7 +66,7 @@ class App extends Component {
                     <AuthenticatedRoute path="/quiz" exact component={UserQuizPage}/>
                     <AuthenticatedRoute path="/result" exact component={UserResultPage}/>
                     <AuthenticatedRoute path="/statistics" exact component={UserStatisticsPage}/>
-                    <AuthenticatedRoute path="/quiz/add" exact component={QuizAddPage}/>
+                    <AuthenticatedRoute path="/quiz/details" exact component={QuizDetailsPage}/>
                 </Switch>
             </div>
         );

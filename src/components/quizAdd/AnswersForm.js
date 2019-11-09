@@ -14,11 +14,11 @@ export class AnswerForm extends Component {
         var buttons=[];
         if(id===this.props.answerCount-1) {
             if(id>0) {
-                buttons.push(<Button className="addAnswerButton" variant="success" disabled={id===3} onClick={this.props.handleAnswerAdd}>
+                buttons.push(<Button key={"add"+id} className="addAnswerButton" variant="success" disabled={id===3} onClick={this.props.handleAnswerAdd}>
                                 <FontAwesomeIcon icon={faPlus} color="white"/>
                             </Button>);
                 if(id>1) {
-                    buttons.push(<Button className="deleteAnswerButton" variant="danger" onClick={this.props.handleAnswerDelete}>
+                    buttons.push(<Button key={"del"+id} className="deleteAnswerButton" variant="danger" onClick={this.props.handleAnswerDelete}>
                                     <FontAwesomeIcon icon={faTimes} color="white"/>
                                 </Button>);
                 }
@@ -33,13 +33,19 @@ export class AnswerForm extends Component {
                 <Form.Group as={Row}>
                     <Form.Label column sm={2}>Answers</Form.Label>
                     <Col sm={10}>
-                        {Array.from(Array(this.props.answerCount).keys()).map((id) => 
-                            <Form.Group as={Row}>
+                        {this.props.answers.map((answer, id) => 
+                            <Form.Group key={id} as={Row}>
                                 <Col>
-                                    <Form.Control required type="text" name={"answer"+id} onChange={(e) => this.props.handleAnswerChange(e,id)}/>
+                                    <Form.Control 
+                                        required 
+                                        type="text" 
+                                        name={"answer"+id} 
+                                        value={answer} 
+                                        onChange={(e) => this.props.handleAnswerChange(e,id)}
+                                    />
                                 </Col>
                                 <Col sm={3}>
-                                    <div className="answerButtons">{this.renderButtons(id)}</div>
+                                    <div className="buttonsWrapper">{this.renderButtons(id)}</div>
                                 </Col>
                             </Form.Group>
                         )}

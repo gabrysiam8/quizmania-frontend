@@ -41,7 +41,7 @@ body {
     margin-bottom: 25px;
 }
 
-.QuizAddPage {
+.QuizDetailsPage{
     text-align: center;
 }
 
@@ -105,16 +105,17 @@ body {
     bottom: 5%;
 }
 
-.deleteQuestionButton {
+.questionButton {
     margin-left: 20px;
 }
 
-.answerButtons {
+.buttonsWrapper {
     display: flex;
     flex-direction: row;
+    float: right;
 }
 
-.deleteAnswerButton, .addAnswerButton {
+.deleteAnswerButton, .addAnswerButton, .quizButton {
     margin-left: 10px
 }
 

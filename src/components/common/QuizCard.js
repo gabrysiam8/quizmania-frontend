@@ -23,7 +23,10 @@ export class QuizCard extends Component {
                     <p>{this.props.quiz.description}</p>
                 </Card.Body>
                 {this.props.editable ?
-                    <Button variant="danger" onClick={(e) => this.props.onDelete(e, this.props.quiz.id)}>Delete</Button> 
+                    <div className="buttonsWrapper">
+                        <Button variant="info" onClick={(e) => this.props.onUpdate(e, this.props.quiz.id)}>Edit</Button> 
+                        <Button className="quizButton" variant="danger" onClick={(e) => this.props.onDelete(e, this.props.quiz.id)}>Delete</Button> 
+                    </div>
                     :
                     <Button variant="success" onClick={this.routeChange}>Play</Button> 
                 }

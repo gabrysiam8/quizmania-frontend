@@ -12,11 +12,16 @@ class UserQuizPage extends Component {
         };
 
         this.routeChange = this.routeChange.bind(this);
+        this.handleQuizUpdate = this.handleQuizUpdate.bind(this);
         this.handleQuizDelete = this.handleQuizDelete.bind(this);
     }
 
     routeChange() {
-        this.props.history.push("/quiz/add");
+        this.props.history.push("/quiz/details?edit=false");
+    }
+
+    handleQuizUpdate(event, id) {
+        this.props.history.push("/quiz/details?edit=true&quizId="+id);
     }
 
     handleQuizDelete(event, id) {
@@ -72,7 +77,8 @@ class UserQuizPage extends Component {
                             key={quiz.id}
                             quiz={quiz} 
                             editable={true}
-                            onDelete = {this.handleQuizDelete}
+                            onUpdate={this.handleQuizUpdate}
+                            onDelete={this.handleQuizDelete}
                         />
                     )}
                 </div>
