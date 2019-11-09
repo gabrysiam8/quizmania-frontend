@@ -11,26 +11,16 @@ class QuizPlay extends Component {
         this.state = {
             quizId: props.match.params.id,
             questionIds: [],
-            actualQuestion: -1,
-            startDate: {},
+            actualQuestion: 0,
+            startDate: Date.now(),
             userAnswers: {},
             showModal: false,
             score: {}
         };
-        this.handleStart = this.handleStart.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleFinish = this.handleFinish.bind(this);
         this.handleTryAgain = this.handleTryAgain.bind(this);
         this.togglePopup = this.togglePopup.bind(this);
-    }
-
-    handleStart() {
-        if(this.state.actualQuestion < this.state.questionIds.length-1)
-            this.setState({ 
-                    actualQuestion: this.state.actualQuestion+1,
-                    startDate: Date.now()
-                }
-            );
     }
 
     handleNext(event, selectedAnswer) {
@@ -92,15 +82,11 @@ class QuizPlay extends Component {
     }
 
     render() {
-        let button = null;
-        if(this.state.actualQuestion === -1)
-            button = <Button variant="success" onClick={this.handleStart}>Start</Button>;
-        if(this.state.actualQuestion === this.state.questionIds.length) 
-            button = <Button variant="dark" onClick={this.handleTryAgain}>Try again</Button>;
+        let button = this.state.actualQuestion === this.state.questionIds.length ? <Button variant="dark" onClick={this.handleTryAgain}>Try again</Button> : null;
 
         return (
             <div className="QuizPlay">
-                {(this.state.actualQuestion > -1 && this.state.actualQuestion < this.state.questionIds.length) 
+                {this.state.actualQuestion < this.state.questionIds.length
                 ?
                     <QuestionPlay questionId={this.state.questionIds[this.state.actualQuestion]} handleNext={this.handleNext}/>
                 :
