@@ -41,7 +41,7 @@ body {
     margin-bottom: 25px;
 }
 
-.QuizDetailsPage{
+.QuizDetailsPage, .QuestionPopup{
     text-align: center;
 }
 
@@ -60,7 +60,9 @@ body {
     text-align: center;
 }
 
-.loginAlert, .registerAlert {
+.dangerAlert {
+    display: inline-block;
+    text-align: center;
     margin-top: 20px;
 }
 

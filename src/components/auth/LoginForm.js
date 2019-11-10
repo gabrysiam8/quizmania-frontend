@@ -65,7 +65,7 @@ class LoginForm extends Component {
                     </Button>
                 </Form>
                 {this.state.showMessage ? 
-                    <Alert className="loginAlert" variant="danger">
+                    <Alert className="dangerAlert" variant="danger">
                         <p>{this.state.message}</p>
                     </Alert>
                     :

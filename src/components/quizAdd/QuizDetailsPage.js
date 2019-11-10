@@ -180,7 +180,7 @@ export class QuizDetailsPage extends Component {
                     />
                 }
                 {this.state.showAlert ?
-                    <Alert className="loginAlert" variant="danger">
+                    <Alert className="dangerAlert" variant="danger">
                         <p>Quiz must have title, category and at least one question!</p>
                     </Alert>
                     : null

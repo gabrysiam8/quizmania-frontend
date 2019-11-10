@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col, Alert } from 'react-bootstrap';
 import AnswerForm from './AnswersForm';
 
 
@@ -11,7 +11,8 @@ export class QuestionForm extends Component {
             ...props.initialState,
             correctAnswer: "",
             answersSaved: false,
-            validated: false
+            validated: false,
+            showAlert: false
         };
     
         this.handleQuestionChange = this.handleQuestionChange.bind(this);
@@ -60,14 +61,16 @@ export class QuestionForm extends Component {
     handleNext(event) {
         event.preventDefault();
         const form = event.currentTarget;
+        const { answers } = this.state;
         if (form.checkValidity() === false) {
           event.stopPropagation();
+        } else if((new Set(answers)).size !== answers.length) {
+            event.stopPropagation();
+            this.setState({ showAlert: true });
         } else {
             this.setState({ answersSaved: true });
         }
-        this.setState({
-            validated: true
-        });
+        this.setState({ validated: true });
     }
 
     render() {
@@ -144,6 +147,13 @@ export class QuestionForm extends Component {
                                     handleAnswerDelete={this.handleAnswerDelete}
                                     handleAnswerAdd={this.handleAnswerAdd}
                                 />
+
+                                {this.state.showAlert ?
+                                    <Alert className="dangerAlert" variant="danger">
+                                        <p>Answers must be unique!</p>
+                                    </Alert>
+                                    : null
+                                }
                             </Modal.Body>
                         
                             <Modal.Footer>

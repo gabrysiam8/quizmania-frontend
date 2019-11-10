@@ -91,7 +91,7 @@ class RegisterForm extends Component {
                     </Button>
                 </Form>
                 {this.state.showMessage ? 
-                    <Alert className="registerAlert" variant="danger">
+                    <Alert className="dangerAlert" variant="danger">
                         <p>{this.state.message}</p>
                     </Alert>
                     :

@@ -23,7 +23,7 @@ export class QuestionPopup extends Component {
             }
         
         return (
-            <div>
+            <div className="QuestionPopup">
                 <QuestionForm 
                     editMode={editMode}
                     initialState={question} 
