@@ -19,13 +19,7 @@ export class ResultTable extends Component {
         return API
                 .get("/score")
                 .then((res) => {
-                    this.setState({
-                        scores: res.data
-                    });
-                    return res.data;
-                })
-                .catch(err => {
-                    console.log(err.response);
+                    return this.groupBy('quizId', res.data);
                 });
     }
 
@@ -33,28 +27,44 @@ export class ResultTable extends Component {
         return API
                 .get("/quiz/"+id+"?fields=title")
                 .then((res) => {
-                    this.setState(prevState => ({
-                        scores: prevState.scores.map(s => 
-                            s.quizId === id ? { ...s, quizTitle: res.data.title }: s)
-                    }));
+                    return res.data.title;
                 })
-                .catch(err => {
-                    console.log(err.response);
+                .catch(() => {
+                    return "<unknown title>";
                 });
+    }
+
+    groupBy(key, array) {
+        return array.reduce((objectsByKeyValue, obj) => {
+            const value = obj[key];
+            objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+            return objectsByKeyValue;
+        }, {});
     }
 
     componentDidMount() {
         this.setState({ loading: true }, () => {
-            this
-                .getScores()
+            this.getScores()
                 .then((scores) => {
-                    const quizIds= scores.map(score => score.quizId);
-                    const uniqIds = [...new Set(quizIds)];
+                    Object.keys(scores).forEach(quizId => {
+                        const attemptsNum = scores[quizId].length;
+                        const lastResult = scores[quizId].reduce((prev, current) => (moment(prev.startDate).isAfter(current.startDate)) ? prev : current);
 
-                    const apiPromises = uniqIds.map((quizId) => this.getQuizTitle(quizId) );
-                    Promise
-                        .all(apiPromises)
-                        .then(() => this.setState({ loading: false }));
+                        this.getQuizTitle(quizId)
+                            .then(title => {
+                                const newScore = {
+                                    quizId: quizId,
+                                    quizTitle: title,
+                                    attemptsNum: attemptsNum,
+                                    lastAttemptDate: lastResult.startDate,
+                                    lastScore: lastResult.percentageScore,
+                                }
+                                this.setState({
+                                    scores: [...this.state.scores, newScore]
+                                })
+                            })
+                            .then(() => this.setState({ loading: false }));
+                    });
                 });
         });
     }
@@ -68,25 +78,21 @@ export class ResultTable extends Component {
                 <Table responsive>
                     <thead>
                         <tr>
-                            <th>Quiz</th>
-                            <th>Good answers</th>
-                            <th>All answers</th>
-                            <th>Percentage score</th>
-                            <th>Start time</th>
-                            <th>Elapsed time</th>
+                            <th>Quiz title</th>
+                            <th>Number of attempts</th>
+                            <th>Last attempt date</th>
+                            <th>Last score</th>
                             <th>Quiz statistics</th>
                         </tr>
                     </thead>
                     <tbody>
                     {this.state.scores.map(score => {
-                        const start = new Date(score.startDate); 
+                        const start = new Date(score.lastAttemptDate); 
                         return <tr key={score.id}>
                             <td>{score.quizTitle}</td>
-                            <td>{score.goodAnswers}</td>
-                            <td>{score.allAnswers}</td>
-                            <td>{score.percentageScore}</td>
+                            <td>{score.attemptsNum}</td>
                             <td>{start.toLocaleDateString() + " " + start.toLocaleTimeString()}</td>
-                            <td>{moment.duration(score.elapsedTimeInMs).asSeconds()+ ' s'}</td>
+                            <td>{score.lastScore + " %"}</td>
                             <td>
                                 <Button 
                                     variant="outline-info" 
