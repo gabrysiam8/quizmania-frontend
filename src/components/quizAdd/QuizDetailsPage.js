@@ -23,6 +23,7 @@ export class QuizDetailsPage extends Component {
                 questionIds: []
             },
             questions: [],
+            allLevels: [],
             validated: false, 
             showAlert: false,
             editMode: (query.edit === "true"),
@@ -30,15 +31,63 @@ export class QuizDetailsPage extends Component {
         };
 
         this.saveQuestion = this.saveQuestion.bind(this);
+        this.updateQuiz = this.updateQuiz.bind(this);
+        this.saveQuiz = this.saveQuiz.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async saveQuestion(question) {
         return API
-                .post("/question", question)
-                .then(res => {
-                    return res.data.id;
+            .post("/question", question)
+            .then(res => {
+                return res.data.id;
+            });
+    }
+
+    async updateQuiz(history, quiz) {
+        return API
+            .put("/quiz/"+quiz.id, quiz)
+            .then(res => {
+                history.push({
+                    pathname: '/quiz',
+                    state: { 
+                        quizAdded: true,
+                        message: "Quiz successfully updated!"
+                    }
                 });
+            })
+            .catch(err => {
+                history.push({
+                    pathname: '/quiz',
+                    state: { 
+                        quizAdded: false,
+                        message: "Failed to update quiz!"
+                    }
+                });
+            });
+    }
+
+    async saveQuiz(history, quiz) {
+        return API
+            .post("/quiz", quiz)
+            .then(res => {
+                history.push({
+                    pathname: '/quiz',
+                    state: { 
+                        quizAdded: true,
+                        message: "Quiz successfully added!"
+                    }
+                });
+            })
+            .catch(err => {
+                history.push({
+                    pathname: '/quiz',
+                    state: { 
+                        quizAdded: false,
+                        message: "Failed to add quiz!"
+                    }
+                });
+            });
     }
 
     async handleSubmit(event, questions, quiz) {
@@ -53,49 +102,12 @@ export class QuizDetailsPage extends Component {
                 .then((newIds) => {
                     const { history } = this.props;
                     quiz.questionIds = [...quiz.questionIds, ...newIds];
+
                     if(this.state.editMode) {
-                        API
-                            .put("/quiz/"+quiz.id, quiz)
-                            .then(res => {
-                                history.push({
-                                    pathname: '/quiz',
-                                    state: { 
-                                        quizAdded: true,
-                                        message: "Quiz successfully updated!"
-                                    }
-                                });
-                            })
-                            .catch(err => {
-                                history.push({
-                                    pathname: '/quiz',
-                                    state: { 
-                                        quizAdded: false,
-                                        message: "Failed to update quiz!"
-                                    }
-                                });
-                            });
+                        this.updateQuiz(history, quiz);
                     }
                     else {
-                        API
-                        .post("/quiz", quiz)
-                        .then(res => {
-                            history.push({
-                                pathname: '/quiz',
-                                state: { 
-                                    quizAdded: true,
-                                    message: "Quiz successfully added!"
-                                }
-                            });
-                        })
-                        .catch(err => {
-                            history.push({
-                                pathname: '/quiz',
-                                state: { 
-                                    quizAdded: false,
-                                    message: "Failed to add quiz!"
-                                }
-                            });
-                        });
+                        this.saveQuiz(history, quiz);
                     }
                 });
         }
@@ -106,38 +118,50 @@ export class QuizDetailsPage extends Component {
 
     async getQuizById(id) {
         return API
-                .get("/quiz/"+id)
-                .then(res => {
-                    this.setState({ 
-                        quiz: res.data
-                    });
-                })
-                .catch(err => {
-                    console.log(err.response);
-                });
+            .get("/quiz/"+id)
+            .then(res => {
+                this.setState({ quiz: res.data });
+            });
     }
 
     async getQuizQuestions(id) {
         return API
-                .get("/quiz/"+id+"/question")
-                .then(res => {
-                    this.setState({ questions: res.data });
-                })
-                .catch(err => {
-                    console.log(err.response);
-        });
+            .get("/quiz/"+id+"/question")
+            .then(res => {
+                this.setState({ questions: res.data });
+            });
+    }
+
+    async getQuizLevels() {
+        return API
+            .get("/quiz/level")
+            .then(res => {
+                this.setState({ allLevels: res.data });
+            });
     }
 
     componentDidMount() {
-        if(this.state.editMode) {
-            this.setState({ loading: true }, () => {
+        this.setState({ loading: true }, () => {
+            if(this.state.editMode) {
                 Promise
-                    .all([this.getQuizById(this.state.quiz.id), this.getQuizQuestions(this.state.quiz.id)])
+                    .all([this.getQuizById(this.state.quiz.id), this.getQuizQuestions(this.state.quiz.id), this.getQuizLevels()])
                     .then(() =>
                         this.setState({ loading: false })
                     );
-            });
-        }
+            }
+            else {
+                this.getQuizLevels()
+                    .then(() =>
+                        this.setState({ 
+                            loading: false,
+                            quiz: {
+                                ...this.state.quiz,
+                                level: this.state.allLevels[0]
+                            }
+                        })
+                    );
+            }
+        });
     }
 
     render() {
@@ -150,6 +174,7 @@ export class QuizDetailsPage extends Component {
                         editMode={this.state.editMode}
                         quiz={this.state.quiz}
                         questions={this.state.questions}
+                        allLevels={this.state.allLevels}
                         handleSubmit={this.handleSubmit}
                         validated={this.state.validated}
                     />

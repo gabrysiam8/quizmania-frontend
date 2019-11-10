@@ -40,8 +40,6 @@ export class QuizAddEditComponent extends Component {
     }
 
     handleQuestionAdd(event, question) {
-        event.preventDefault();
-        
         this.setState({
             questions: [...this.state.questions, question],
             showModal: !this.state.showModal
@@ -49,8 +47,6 @@ export class QuizAddEditComponent extends Component {
     }
 
     showEditPopup(event, question, idx) {
-        event.preventDefault();
-        
         this.setState({
             showModal: !this.state.showModal,
             editedQuestion: {
@@ -70,6 +66,7 @@ export class QuizAddEditComponent extends Component {
     handleQuestionEdit(event, question, idx) {
         let updatedQuestions = [...this.state.questions];
         updatedQuestions[idx] = question;
+
         question.id ? 
             API
                 .put("/question/"+question.id, question)
@@ -90,8 +87,6 @@ export class QuizAddEditComponent extends Component {
     }
 
     handleQuestionDelete(event, question) {
-        event.preventDefault();
-        
         this.setState({
             quiz: {
                 ...this.state.quiz,
@@ -110,7 +105,7 @@ export class QuizAddEditComponent extends Component {
         return (
             <div className="QuizAddEditComponent">
                 <Form noValidate validated={this.props.validated} onSubmit={this.handleSubmit}>
-                    <QuizForm initialState={this.state.quiz} handleChange={this.handleChange}/>
+                    <QuizForm initialState={this.state.quiz} allLevels={this.props.allLevels} handleChange={this.handleChange}/>
             
                     <p>Questions:</p>
                     <QuestionList 
