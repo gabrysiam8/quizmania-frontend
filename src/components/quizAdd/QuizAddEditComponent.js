@@ -98,7 +98,8 @@ export class QuizAddEditComponent extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.handleSubmit(event, this.state.questions, this.state.quiz)
+        this.refs.btn.setAttribute("disabled", "disabled");
+        this.props.handleSubmit(event, this.state.questions, this.state.quiz);
     }
     
     render() {
@@ -119,7 +120,7 @@ export class QuizAddEditComponent extends Component {
                     </Button>
                     <br/><br/>
 
-                    <Button variant="info" type="submit">
+                    <Button ref="btn" variant="info" type="submit">
                         {this.props.editMode ? "Update" : "Add"}
                     </Button>
                 </Form>

@@ -16,6 +16,7 @@ export class QuestionPlay extends Component {
 
     handleAnswerChange(event) {
         this.setState({ selectedAnswer: event.target.value });
+        this.refs.btn.removeAttribute("disabled");
     }
 
     loadQuestion() {
@@ -64,9 +65,13 @@ export class QuestionPlay extends Component {
                     </Form.Group>
                 </fieldset>
                 <Button 
+                    ref="btn"
                     variant="outline-dark"
-                    onClick={(e) => this.props.handleNext(e, this.state.selectedAnswer)}
-                    disabled={this.state.selectedAnswer===""}>
+                    onClick={(e) => {
+                        this.refs.btn.setAttribute("disabled", "disabled"); 
+                        this.props.handleNext(e, this.state.selectedAnswer);
+                    }}
+                >
                     Next
                 </Button>
             </div>

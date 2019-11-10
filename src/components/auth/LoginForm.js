@@ -26,6 +26,7 @@ class LoginForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.refs.btn.setAttribute("disabled", "disabled"); 
 
         const { username, password } = this.state;
         const { history } = this.props;
@@ -43,6 +44,7 @@ class LoginForm extends Component {
                     showMessage: true,
                     message: err.response.data
                 });
+                this.refs.btn.removeAttribute("disabled");
             });
     }
 
@@ -60,7 +62,7 @@ class LoginForm extends Component {
                         <Form.Control required type="password" name="password" placeholder="Password" onChange={this.handleChange}/>
                     </Form.Group>
                     
-                    <Button variant="info" type="submit">
+                    <Button ref="btn" variant="info" type="submit">
                         Log in
                     </Button>
                 </Form>

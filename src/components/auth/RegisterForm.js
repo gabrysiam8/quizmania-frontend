@@ -35,6 +35,7 @@ class RegisterForm extends Component {
         if (form.checkValidity() === false) {
           event.stopPropagation();
         } else {
+            this.refs.btn.setAttribute("disabled", "disabled");
             const { email, username, password } = this.state;
 
             AuthService
@@ -43,12 +44,14 @@ class RegisterForm extends Component {
                     this.setState({
                         showModal: true
                     });
+                    this.refs.btn.removeAttribute("disabled");
                 })
                 .catch(err => {
                     this.setState({
                         showMessage: true,
                         message: err.response.data
                     });
+                    this.refs.btn.removeAttribute("disabled");
                 });
         }
     
@@ -86,7 +89,7 @@ class RegisterForm extends Component {
                         </Form.Group>
                     
                     
-                    <Button variant="info" type="submit">
+                    <Button ref="btn" variant="info" type="submit">
                         Register
                     </Button>
                 </Form>

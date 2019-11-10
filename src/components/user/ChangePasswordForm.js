@@ -25,6 +25,7 @@ class ChangePasswordForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.refs.btn.setAttribute("disabled", "disabled"); 
 
         const { oldPassword, newPassword, passwordConfirmation } = this.state;
         const { history } = this.props;
@@ -36,6 +37,7 @@ class ChangePasswordForm extends Component {
             })
             .catch(err => {
                 alert(err.response.data);
+                this.refs.btn.removeAttribute("disabled");
             });
     }
 
@@ -58,7 +60,7 @@ class ChangePasswordForm extends Component {
                         <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" onChange={this.handleChange}/>
                     </Form.Group>
 
-                    <Button variant="info" type="submit">
+                    <Button ref="btn" variant="info" type="submit">
                         Change password
                     </Button>
                 </Form>
