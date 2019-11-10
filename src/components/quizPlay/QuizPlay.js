@@ -93,7 +93,7 @@ class QuizPlay extends Component {
                     null
                 }
                 {button}
-                <Modal show={this.state.showModal} onHide={this.togglePopup}>
+                <Modal show={this.state.showModal} onHide={this.togglePopup} size="lg" scrollable>
                     <ScorePopup score={this.state.score}/>
                 </Modal>
             </div>

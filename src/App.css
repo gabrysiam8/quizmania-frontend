@@ -163,6 +163,8 @@ input[type="radio"]:checked + label{
 }
 
 .scorePopup {
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -200,4 +202,16 @@ a:hover {
     font-size: 100px;
     text-align: center;
     margin: 50px;
+}
+
+.ranking {
+    margin-top: 60px;
+}
+
+.selectedRow {
+    background-color: #b7f5ff63;
+}
+
+.hiddenRow {
+    display: none;
 }
