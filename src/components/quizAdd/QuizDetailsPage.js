@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import qs from 'qs';
 import API from '../../utils/API';
 import QuizAddEditComponent from './QuizAddEditComponent';
-import { Spinner, Alert } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
 export class QuizDetailsPage extends Component {
     constructor(props) {
@@ -24,8 +24,6 @@ export class QuizDetailsPage extends Component {
             },
             questions: [],
             allLevels: [],
-            validated: false, 
-            showAlert: false,
             editMode: (query.edit === "true"),
             loading: false
         };
@@ -90,30 +88,21 @@ export class QuizDetailsPage extends Component {
             });
     }
 
-    async handleSubmit(event, questions, quiz) {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false || questions.length<1) {
-            event.stopPropagation();
-            this.setState({ showAlert: true });
-        } else {
-            const apiPromises = questions.filter(question => !question.id).map(question => this.saveQuestion(question));
-            Promise
-                .all(apiPromises)
-                .then((newIds) => {
-                    const { history } = this.props;
-                    quiz.questionIds = [...quiz.questionIds, ...newIds];
+    async handleSubmit(questions, quiz) {
+        const apiPromises = questions.filter(question => !question.id).map(question => this.saveQuestion(question));
+        Promise
+            .all(apiPromises)
+            .then((newIds) => {
+                const { history } = this.props;
+                quiz.questionIds = [...quiz.questionIds, ...newIds];
 
-                    if(this.state.editMode) {
-                        this.updateQuiz(history, quiz);
-                    }
-                    else {
-                        this.saveQuiz(history, quiz);
-                    }
-                });
-        }
-        this.setState({
-            validated: true
-        });
+                if(this.state.editMode) {
+                    this.updateQuiz(history, quiz);
+                }
+                else {
+                    this.saveQuiz(history, quiz);
+                }
+            });
     }
 
     async getQuizById(id) {
@@ -176,14 +165,7 @@ export class QuizDetailsPage extends Component {
                         questions={this.state.questions}
                         allLevels={this.state.allLevels}
                         handleSubmit={this.handleSubmit}
-                        validated={this.state.validated}
                     />
-                }
-                {this.state.showAlert ?
-                    <Alert className="dangerAlert" variant="danger">
-                        <p>Quiz must have title, category and at least one question!</p>
-                    </Alert>
-                    : null
                 }
             </div>
         )

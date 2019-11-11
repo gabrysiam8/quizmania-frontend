@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { Modal, Form, Button, Alert } from 'react-bootstrap';
 import API from '../../utils/API';
 import QuestionPopup from './QuestionPopup';
 import QuestionList from './QuestionList';
@@ -14,7 +14,8 @@ export class QuizAddEditComponent extends Component {
             questions: props.questions,
             showModal: false,
             showAlert: false,
-            showConfirmation: false
+            showConfirmation: false,
+            validated: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -99,13 +100,24 @@ export class QuizAddEditComponent extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.refs.btn.setAttribute("disabled", "disabled");
-        this.props.handleSubmit(event, this.state.questions, this.state.quiz);
+        const form = event.currentTarget;
+        
+        if (form.checkValidity() === false || this.state.questions.length<1) {
+            event.stopPropagation();
+            this.setState({ showAlert: true });
+            this.refs.btn.removeAttribute("disabled");
+        } else {
+            this.props.handleSubmit(this.state.questions, this.state.quiz);
+        }
+        this.setState({
+            validated: true
+        });
     }
     
     render() {
         return (
             <div className="QuizAddEditComponent">
-                <Form noValidate validated={this.props.validated} onSubmit={this.handleSubmit}>
+                <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <QuizForm initialState={this.state.quiz} allLevels={this.props.allLevels} handleChange={this.handleChange}/>
             
                     <p>Questions:</p>
@@ -124,6 +136,13 @@ export class QuizAddEditComponent extends Component {
                         {this.props.editMode ? "Update" : "Add"}
                     </Button>
                 </Form>
+
+                {this.state.showAlert ?
+                    <Alert className="dangerAlert" variant="danger">
+                        <p>Quiz must have title, category and at least one question!</p>
+                    </Alert>
+                    : null
+                }
 
                 <Modal size="lg" show={this.state.showModal} onHide={this.togglePopup}>
                     <QuestionPopup
