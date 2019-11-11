@@ -125,4 +125,4 @@ export class ResultTable extends Component {
     }
 }
 
-export default ResultTable
+export default ResultTable;

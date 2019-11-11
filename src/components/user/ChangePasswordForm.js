@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import API from "../../utils/API";
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 class ChangePasswordForm extends Component {
 
@@ -10,7 +11,10 @@ class ChangePasswordForm extends Component {
         this.state = {
             oldPassword: "",
             newPassword: "",
-            passwordConfirmation: ""
+            passwordConfirmation: "",
+            validated: false,
+            showMessage: false,
+            message: ""
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -25,26 +29,40 @@ class ChangePasswordForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.refs.btn.setAttribute("disabled", "disabled"); 
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+          event.stopPropagation();
+        } else {
+            this.refs.btn.setAttribute("disabled", "disabled"); 
 
-        const { oldPassword, newPassword, passwordConfirmation } = this.state;
-        const { history } = this.props;
+            const { oldPassword, newPassword, passwordConfirmation } = this.state;
+            const { history } = this.props;
 
-        API.put("/user/me/password", { oldPassword, newPassword, passwordConfirmation })
-            .then((res) => {
-                alert(res.data);
-                history.push('/');
-            })
-            .catch(err => {
-                alert(err.response.data);
-                this.refs.btn.removeAttribute("disabled");
-            });
+            API.put("/user/me/password", { oldPassword, newPassword, passwordConfirmation })
+                .then((res) => {
+                    history.push({
+                        pathname: '/user/me',
+                        state: { 
+                            passwordChanged: true,
+                            message: res.data
+                        }
+                    });
+                })
+                .catch(err => {
+                    this.setState({
+                        showMessage: true,
+                        message: err.response.data
+                    });
+                    this.refs.btn.removeAttribute("disabled");
+                });
+        }
+        this.setState({ validated: true });
     }
 
     render() {
         return (
             <div className="ChangePasswordForm">
-                <Form onSubmit={this.handleSubmit}>
+                <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Group controlId="oldPassword">
                         <Form.Label>Old password</Form.Label>
                         <Form.Control required type="password" name="oldPassword" placeholder="Old password" onChange={this.handleChange}/>
@@ -52,18 +70,26 @@ class ChangePasswordForm extends Component {
 
                     <Form.Group controlId="newPassword">
                         <Form.Label>New password</Form.Label>
-                        <Form.Control required type="password" name="newPassword" placeholder="New password" onChange={this.handleChange}/>
+                        <Form.Control required type="password" name="newPassword" placeholder="New password" minLength="4" onChange={this.handleChange}/>
+                        <PasswordStrengthBar password={this.state.newPassword} />
                     </Form.Group>
             
                     <Form.Group controlId="password">
                         <Form.Label>Password confirmation</Form.Label>
-                        <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" onChange={this.handleChange}/>
+                        <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" minLength="4" onChange={this.handleChange}/>
                     </Form.Group>
 
                     <Button ref="btn" variant="info" type="submit">
                         Change password
                     </Button>
                 </Form>
+                {this.state.showMessage ? 
+                    <Alert className="dangerAlert" variant="danger">
+                        <p>{this.state.message}</p>
+                    </Alert>
+                    :
+                    null
+                }
             </div>
         );
     }

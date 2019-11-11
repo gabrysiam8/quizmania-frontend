@@ -11,7 +11,8 @@ class LoginForm extends Component {
             username: "",
             password: "",
             showMessage: false,
-            message: ""
+            message: "",
+            validated: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,32 +27,38 @@ class LoginForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.refs.btn.setAttribute("disabled", "disabled"); 
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+          event.stopPropagation();
+        } else {
+            this.refs.btn.setAttribute("disabled", "disabled"); 
 
-        const { username, password } = this.state;
-        const { history } = this.props;
+            const { username, password } = this.state;
+            const { history } = this.props;
 
-        AuthService
-            .login(username, password)
-            .then(res => {
-                AuthService.registerSuccessfulLogin(username, res.data.token);
-                this.props.userHasAuthenticated(true);
-                history.push('/');
-            })
-            .catch(err => {
-                this.props.userHasAuthenticated(false);
-                this.setState({
-                    showMessage: true,
-                    message: err.response.data
+            AuthService
+                .login(username, password)
+                .then(res => {
+                    AuthService.registerSuccessfulLogin(username, res.data.token);
+                    this.props.userHasAuthenticated(true);
+                    history.push('/');
+                })
+                .catch(err => {
+                    this.props.userHasAuthenticated(false);
+                    this.setState({
+                        showMessage: true,
+                        message: err.response.data
+                    });
+                    this.refs.btn.removeAttribute("disabled");
                 });
-                this.refs.btn.removeAttribute("disabled");
-            });
+        }
+        this.setState({ validated: true });
     }
 
     render() {
         return (
-            <div className="LoginForm" onSubmit={this.handleSubmit}>
-                <Form>
+            <div className="LoginForm">
+                <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit} >
                     <Form.Group controlId="username">
                         <Form.Label>Username</Form.Label>
                         <Form.Control required type="text" name="username" placeholder="Username" onChange={this.handleChange}/>

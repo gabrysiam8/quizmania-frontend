@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Card, Spinner, Button } from 'react-bootstrap';
+import { Card, Spinner, Button, Alert } from 'react-bootstrap';
 import CountUp from 'react-countup';
 import API from '../../utils/API';
 
@@ -37,8 +37,19 @@ class UserProfile extends Component {
 
     render() {
         const { loading, user } = this.state;
+        const { history, location } = this.props;
+        var alert = null;
+        if(location.state) {
+            const alertVariant = location.state.passwordChanged ? "success" : "danger";
+            alert = <Alert variant={alertVariant} onClose={() => history.replace({ pathname: "/user/me", state: "" })} dismissible>
+                        {location.state.message}
+                    </Alert>
+        }
         return (
             <div className="UserProfile">
+                <div>
+                    {alert}
+                </div>
                 {loading ?
                     <Spinner animation="border" variant="info" />
                     :

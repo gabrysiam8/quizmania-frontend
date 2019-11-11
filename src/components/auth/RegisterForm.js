@@ -54,11 +54,7 @@ class RegisterForm extends Component {
                     this.refs.btn.removeAttribute("disabled");
                 });
         }
-    
-        this.setState({
-            validated: true
-        });
-
+        this.setState({ validated: true });
     }
 
     togglePopup() {
@@ -86,7 +82,7 @@ class RegisterForm extends Component {
                         <Form.Label>Password</Form.Label>
                         <Form.Control required type="password" name="password" placeholder="Password" minLength="4" onChange={this.handleChange}/>
                         <PasswordStrengthBar password={this.state.password} />
-                        </Form.Group>
+                    </Form.Group>
                     
                     
                     <Button ref="btn" variant="info" type="submit">
