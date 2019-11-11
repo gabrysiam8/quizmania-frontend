@@ -23,14 +23,34 @@ export class ResultTable extends Component {
                 });
     }
 
-    async getQuizTitle(id) {
+    async getQuizResult(quizId, quizScores) {
+        const attemptsNum = quizScores.length;
+        const lastResult = quizScores.reduce((prev, current) => (moment(prev.startDate).isAfter(current.startDate)) ? prev : current);
+        let newScore = {
+            quizId: quizId,
+            attemptsNum: attemptsNum,
+            lastAttemptDate: lastResult.startDate,
+            lastScore: lastResult.percentageScore,
+        }
         return API
-                .get("/quiz/"+id+"?fields=title")
+                .get("/quiz/"+quizId+"?fields=title")
                 .then((res) => {
-                    return res.data.title;
+                    newScore = {
+                        ...newScore,
+                        quizTitle: res.data.title
+                    }
+                    this.setState({
+                        scores: [...this.state.scores, newScore]
+                    });
                 })
                 .catch(() => {
-                    return "<unknown title>";
+                    newScore = {
+                        ...newScore,
+                        quizTitle: "<unknown title>"
+                    }
+                    this.setState({
+                        scores: [...this.state.scores, newScore]
+                    });
                 });
     }
 
@@ -46,27 +66,21 @@ export class ResultTable extends Component {
         this.setState({ loading: true }, () => {
             this.getScores()
                 .then((scores) => {
-                    Object.keys(scores).forEach(quizId => {
-                        const attemptsNum = scores[quizId].length;
-                        const lastResult = scores[quizId].reduce((prev, current) => (moment(prev.startDate).isAfter(current.startDate)) ? prev : current);
-
-                        this.getQuizTitle(quizId)
-                            .then(title => {
-                                const newScore = {
-                                    quizId: quizId,
-                                    quizTitle: title,
-                                    attemptsNum: attemptsNum,
-                                    lastAttemptDate: lastResult.startDate,
-                                    lastScore: lastResult.percentageScore,
-                                }
-                                this.setState({
-                                    scores: [...this.state.scores, newScore]
-                                })
+                    const apiPromises = Object.keys(scores).map(quizId => this.getQuizResult(quizId, scores[quizId]));
+                    Promise
+                        .all(apiPromises)
+                        .then(() => {
+                            const sortedScores = [...this.state.scores];
+                            sortedScores.sort((prev,curr) => {
+                                return new Date(curr.lastAttemptDate) - new Date(prev.lastAttemptDate);
+                            });
+                            this.setState({ 
+                                scores: sortedScores,
+                                loading: false 
                             })
-                            .then(() => this.setState({ loading: false }));
-                    });
+                        });
                 });
-        });
+            });
     }
 
     render() {
@@ -88,7 +102,7 @@ export class ResultTable extends Component {
                     <tbody>
                     {this.state.scores.map(score => {
                         const start = new Date(score.lastAttemptDate); 
-                        return <tr key={score.id}>
+                        return <tr key={score.quizId}>
                             <td>{score.quizTitle}</td>
                             <td>{score.attemptsNum}</td>
                             <td>{start.toLocaleDateString() + " " + start.toLocaleTimeString()}</td>
