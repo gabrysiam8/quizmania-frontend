@@ -11,15 +11,16 @@ export class QuestionPopup extends Component {
             {
                 id: initialState.question.id,
                 question: initialState.question.question,
-                answers:  initialState.question.answers,
-                answerCount: initialState.question.answers.length,
+                badAnswers:  initialState.question.badAnswers,
+                correctAnswer:  initialState.question.correctAnswer,
+                answerCount: initialState.question.badAnswers.length,
                 arrIndex: initialState.arrIndex
             }
             :
             {
                 question: "",
-                answers:  ["",""],
-                answerCount: 2,
+                badAnswers:  [""],
+                answerCount: 1,
             }
         
         return (

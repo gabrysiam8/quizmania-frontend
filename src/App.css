@@ -208,7 +208,7 @@ a:hover {
     margin-top: 60px;
 }
 
-.selectedRow {
+.selectedRow, .correctAnswerInput, .correctAnswerInput:focus {
     background-color: #b7f5ff63;
 }
 

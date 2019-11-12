@@ -115,7 +115,7 @@ export class QuizDetailsPage extends Component {
 
     async getQuizQuestions(id) {
         return API
-            .get("/quiz/"+id+"/question")
+            .get("/quiz/"+id+"/question?toScore=false")
             .then(res => {
                 this.setState({ questions: res.data });
             });

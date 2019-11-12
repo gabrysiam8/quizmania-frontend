@@ -40,7 +40,7 @@ export class ScorePage extends Component {
             .getScore(this.props.match.params.id)
             .then(() => {
                     API
-                        .get('/quiz/'+this.state.quizId+'/question')
+                        .get('/quiz/'+this.state.quizId+'/question?toScore=true')
                         .then(res => {
                             this.setState({
                                 questions: res.data

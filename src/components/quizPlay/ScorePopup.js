@@ -45,7 +45,7 @@ export class ScorePopup extends Component {
     render() {
         const { score } = this.props;
         const { scores, actualScoreIdx } = this.state;
-        console.log(this.state)
+        
         return (
             <div>
             {this.state.loading ?
