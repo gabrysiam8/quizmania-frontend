@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../utils/API';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Spinner } from 'react-bootstrap';
 import QuestionPlay from './QuestionPlay';
 import ScorePopup from './ScorePopup';
 
@@ -15,7 +15,8 @@ class QuizPlay extends Component {
             startDate: Date.now(),
             userAnswers: {},
             showModal: false,
-            score: {}
+            score: {},
+            loading: true
         };
         this.handleNext = this.handleNext.bind(this);
         this.handleFinish = this.handleFinish.bind(this);
@@ -72,13 +73,18 @@ class QuizPlay extends Component {
     }
 
     componentDidMount() {
-        API.get('/quiz/'+this.state.quizId)
-            .then(res => {
-                this.setState({ questionIds: res.data.questionIds });
-            })
-            .catch(err => {
-                console.log(err.response);
-            });
+        this.setState({ loading: true }, () => {
+            API.get('/quiz/'+this.state.quizId)
+                .then(res => {
+                    this.setState({ 
+                        questionIds: res.data.questionIds,
+                        loading: false
+                    });
+                })
+                .catch(err => {
+                    this.setState({ loading: false });
+                });
+        });
     }
 
     render() {
@@ -86,16 +92,22 @@ class QuizPlay extends Component {
 
         return (
             <div className="QuizPlay">
-                {this.state.actualQuestion < this.state.questionIds.length
-                ?
-                    <QuestionPlay questionId={this.state.questionIds[this.state.actualQuestion]} handleNext={this.handleNext}/>
+            {this.state.loading ?
+                <Spinner animation="border" variant="info" />
                 :
-                    null
-                }
-                {button}
-                <Modal show={this.state.showModal} onHide={this.togglePopup} size="lg" scrollable>
-                    <ScorePopup score={this.state.score}/>
-                </Modal>
+                <div >
+                    {this.state.actualQuestion < this.state.questionIds.length
+                    ?
+                        <QuestionPlay questionId={this.state.questionIds[this.state.actualQuestion]} handleNext={this.handleNext}/>
+                    :
+                        null
+                    }
+                    {button}
+                    <Modal show={this.state.showModal} onHide={this.togglePopup} size="lg" scrollable>
+                        <ScorePopup score={this.state.score}/>
+                    </Modal>
+                </div>
+            }
             </div>
         )
     }

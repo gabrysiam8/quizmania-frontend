@@ -23,20 +23,20 @@ export class AccountVerificationPage extends Component {
         if(query.token) {
             this.setState({ loading: true }, () => {
                 API.get('/auth/confirmation?token='+query.token)
-                .then(res => {
-                    this.setState({
-                        loading: false,
-                        confirmed: true,
-                        message: res.data
+                    .then(res => {
+                        this.setState({
+                            loading: false,
+                            confirmed: true,
+                            message: res.data
+                        });
+                    })
+                    .catch(err => {
+                        this.setState({
+                            loading: false,
+                            confirmed: false,
+                            message: err.response.data
+                        });
                     });
-                })
-                .catch(err => {
-                    this.setState({
-                        loading: false,
-                        confirmed: false,
-                        message: err.response.data
-                    });
-                });
               });
         }
     }

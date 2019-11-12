@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../utils/API';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, Spinner } from 'react-bootstrap';
 
 export class QuestionPlay extends Component {
     constructor(props) {
@@ -9,7 +9,8 @@ export class QuestionPlay extends Component {
         this.state = {
             question: "",
             answers: [],
-            selectedAnswer: ""
+            selectedAnswer: "",
+            loading: true
         };
         this.handleAnswerChange = this.handleAnswerChange.bind(this);
     }
@@ -24,11 +25,12 @@ export class QuestionPlay extends Component {
             .then(res => {
                 this.setState({
                     question: res.data.question, 
-                    answers:res.data.answers
+                    answers:res.data.answers,
+                    loading: false
                 });
             })
             .catch(err => {
-                console.log(err.response);
+                this.setState({ loading: false });
             });
     }
 
@@ -38,42 +40,50 @@ export class QuestionPlay extends Component {
     }
 
     componentDidMount() {
-        this.loadQuestion()
+        this.setState({ loading: true }, () => {
+            this.loadQuestion();
+        });
     }
 
     render() {
         return (
             <div className="QuestionPlay">
-                <h1>{this.state.question}</h1>
-                <fieldset>
-                    <Form.Group as={Row}>
-                        <Col >
-                            {this.state.answers.map((answer, id) => 
-                                <div key={answer}>
-                                    <input 
-                                        type="radio" 
-                                        name={this.state.question}
-                                        id={answer} 
-                                        value={answer} 
-                                        onChange={this.handleAnswerChange} 
-                                        checked={this.state.selectedAnswer===answer}
-                                    />
-                                    <label className="answerLabel" htmlFor={answer}>{answer}</label>
-                                </div>
-                            )}
-                    </Col>
-                    </Form.Group>
-                </fieldset>
-                <Button 
-                    ref="btn"
-                    variant="outline-dark"
-                    onClick={(e) => {
-                        this.refs.btn.setAttribute("disabled", "disabled"); 
-                        this.props.handleNext(e, this.state.selectedAnswer);
-                    }}
-                >
-                    Next
-                </Button>
+                {this.state.loading ?
+                    <Spinner animation="border" variant="info" />
+                :
+                <div className="QuestionPlay"> 
+                    <h1>{this.state.question}</h1>
+                    <fieldset>
+                        <Form.Group as={Row}>
+                            <Col >
+                                {this.state.answers.map((answer, id) => 
+                                    <div key={answer}>
+                                        <input 
+                                            type="radio" 
+                                            name={this.state.question}
+                                            id={answer} 
+                                            value={answer} 
+                                            onChange={this.handleAnswerChange} 
+                                            checked={this.state.selectedAnswer===answer}
+                                        />
+                                        <label className="answerLabel" htmlFor={answer}>{answer}</label>
+                                    </div>
+                                )}
+                        </Col>
+                        </Form.Group>
+                    </fieldset>
+                    <Button 
+                        ref="btn"
+                        variant="outline-dark"
+                        onClick={(e) => {
+                            this.refs.btn.setAttribute("disabled", "disabled"); 
+                            this.props.handleNext(e, this.state.selectedAnswer);
+                        }}
+                    >
+                        Next
+                    </Button>
+                </div>
+                }
             </div>
         )
     }
