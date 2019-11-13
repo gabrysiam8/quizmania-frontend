@@ -3,6 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import API from "../../utils/API";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import qs from 'qs';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 export class ResetPasswordForm extends Component {
     constructor(props) {
@@ -15,11 +16,19 @@ export class ResetPasswordForm extends Component {
             showForm: false,
             validated: false,
             showMessage: false,
-            message: ""
+            message: "",
+            showAlert: false
         };
 
+        this.onConfirm = this.onConfirm.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    onConfirm() {
+        this.props.history.push({
+            pathname: '/login'
+        });
     }
 
     handleChange(event) {
@@ -37,14 +46,13 @@ export class ResetPasswordForm extends Component {
             this.refs.btn.setAttribute("disabled", "disabled"); 
 
             const { userId, newPassword, passwordConfirmation } = this.state;
-            const { history } = this.props;
 
             API.put("/user/"+userId+"/password", { newPassword, passwordConfirmation })
                 .then((res) => {
-                    alert("Password successfully reset");
-                    history.push({
-                        pathname: '/login',
+                    this.setState({
+                        showAlert: true
                     });
+                   
                 })
                 .catch(err => {
                     this.setState({
@@ -61,7 +69,7 @@ export class ResetPasswordForm extends Component {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true
         });
-
+        console.log(query.token)
         API.get("/confirmation?token="+query.token)
             .then((res) => {
                 this.setState({ 
@@ -81,8 +89,6 @@ export class ResetPasswordForm extends Component {
         return (
             <div className="ChangePasswordForm">
                 {this.state.showForm ?
-                    null
-                : 
                     <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                         <Form.Group controlId="newPassword">
                             <Form.Label>New password</Form.Label>
@@ -99,12 +105,21 @@ export class ResetPasswordForm extends Component {
                             Change password
                         </Button>
                     </Form>
+                :
+                    null
                 }
                 {this.state.showMessage ? 
                     <Alert className="dangerAlert" variant="danger">
-                        <Alert.Heading>Failed to reset password!</Alert.Heading>
+                        {this.state.showForm ? null : <Alert.Heading>Cannot reset password!</Alert.Heading> }
                         <p>{this.state.message}</p>
                     </Alert>
+                    :
+                    null
+                }
+                {this.state.showAlert ? 
+                    <SweetAlert success title="Success!" confirmBtnText="Log in" onConfirm={this.onConfirm}>
+                        Password was successfully reset!
+                    </SweetAlert>
                     :
                     null
                 }

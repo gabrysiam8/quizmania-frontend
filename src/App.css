@@ -37,7 +37,7 @@ body {
     margin: 50px auto auto;
 }
 
-.LoginForm input, .RegisterForm input, .ChangePasswordForm input, .QuizForm input {
+.RegisterForm input, .ChangePasswordForm input, .QuizForm input {
     margin-bottom: 25px;
 }
 
@@ -214,4 +214,8 @@ a:hover {
 
 .hiddenRow {
     display: none;
+}
+
+.passwordInput {
+    margin: 25px 0;
 }
