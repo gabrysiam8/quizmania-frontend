@@ -41,7 +41,7 @@ body {
     margin-bottom: 25px;
 }
 
-.QuizDetailsPage, .QuestionPopup{
+.QuizDetailsPage, .centerPopup{
     text-align: center;
 }
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Button, Alert, Modal } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import AuthService from '../../service/AuthService';
 import PasswordStrengthBar from 'react-password-strength-bar'
+import EmailModal from './EmailModal';
 
 class RegisterForm extends Component {
 
@@ -13,14 +14,14 @@ class RegisterForm extends Component {
             username: "",
             password: "",
             validated: false,
-            showModal: false,
+            emailModal: false,
             showMessage: false,
             message: ""
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.togglePopup = this.togglePopup.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
 
     handleChange(event) {
@@ -42,7 +43,7 @@ class RegisterForm extends Component {
                 .register(email, username, password)
                 .then(() => {
                     this.setState({
-                        showModal: true
+                        emailModal: <EmailModal hide={this.hideModal} email={email} type="activate your account"/>
                     });
                     this.refs.btn.removeAttribute("disabled");
                 })
@@ -57,9 +58,9 @@ class RegisterForm extends Component {
         this.setState({ validated: true });
     }
 
-    togglePopup() {
+    hideModal() {
         this.setState({
-          showModal: !this.state.showModal
+            emailModal: null
         });
         this.props.history.push('login');
     }
@@ -84,7 +85,6 @@ class RegisterForm extends Component {
                         <PasswordStrengthBar password={this.state.password} />
                     </Form.Group>
                     
-                    
                     <Button ref="btn" variant="info" type="submit">
                         Register
                     </Button>
@@ -96,15 +96,7 @@ class RegisterForm extends Component {
                     :
                     null
                 }
-                <Modal size="lg" show={this.state.showModal} onHide={this.togglePopup}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Almost done...</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p>A verification email was sent to: {this.state.email}.
-                        Open this email and click the link to activate your account.</p>
-                    </Modal.Body>
-                </Modal>
+                {this.state.emailModal}
             </div>
         );
     }

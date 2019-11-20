@@ -17,7 +17,7 @@ export class ResetPasswordForm extends Component {
             validated: false,
             showMessage: false,
             message: "",
-            showAlert: false
+            alert: null
         };
 
         this.onConfirm = this.onConfirm.bind(this);
@@ -49,8 +49,11 @@ export class ResetPasswordForm extends Component {
 
             API.put("/user/"+userId+"/password", { newPassword, passwordConfirmation })
                 .then((res) => {
+                    const successAlert = <SweetAlert success title="Success!" confirmBtnText="Log in" onConfirm={this.onConfirm}>
+                                            Password was successfully reset!
+                                        </SweetAlert>
                     this.setState({
-                        showAlert: true
+                        alert: successAlert
                     });
                    
                 })
@@ -116,13 +119,7 @@ export class ResetPasswordForm extends Component {
                     :
                     null
                 }
-                {this.state.showAlert ? 
-                    <SweetAlert success title="Success!" confirmBtnText="Log in" onConfirm={this.onConfirm}>
-                        Password was successfully reset!
-                    </SweetAlert>
-                    :
-                    null
-                }
+                {this.state.alert}
             </div>
         );
     }

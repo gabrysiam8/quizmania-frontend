@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import API from "../../utils/API";
 import PasswordStrengthBar from 'react-password-strength-bar';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 class ChangePasswordForm extends Component {
 
@@ -14,7 +15,8 @@ class ChangePasswordForm extends Component {
             passwordConfirmation: "",
             validated: false,
             showMessage: false,
-            message: ""
+            message: "",
+            alert: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,12 +42,11 @@ class ChangePasswordForm extends Component {
 
             API.put("/user/me/password", { oldPassword, newPassword, passwordConfirmation })
                 .then((res) => {
-                    history.push({
-                        pathname: '/user/me',
-                        state: { 
-                            passwordChanged: true,
-                            message: res.data
-                        }
+                    const successAlert = <SweetAlert success title="Success!" confirmBtnText="Ok" onConfirm={() => history.push('/user/me')}>
+                                            {res.data}
+                                        </SweetAlert>
+                    this.setState({
+                        alert: successAlert
                     });
                 })
                 .catch(err => {
@@ -90,6 +91,7 @@ class ChangePasswordForm extends Component {
                     :
                     null
                 }
+                {this.state.alert}
             </div>
         );
     }
