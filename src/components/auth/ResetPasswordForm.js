@@ -49,7 +49,13 @@ export class ResetPasswordForm extends Component {
 
             API.put("/user/"+userId+"/password", { newPassword, passwordConfirmation })
                 .then((res) => {
-                    const successAlert = <SweetAlert success title="Success!" confirmBtnText="Log in" onConfirm={this.onConfirm}>
+                    const successAlert = <SweetAlert 
+                                            success 
+                                            title="Success!" 
+                                            confirmBtnText="Log in" 
+                                            confirmBtnBsStyle="info" 
+                                            onConfirm={this.onConfirm}
+                                        >
                                             Password was successfully reset!
                                         </SweetAlert>
                     this.setState({

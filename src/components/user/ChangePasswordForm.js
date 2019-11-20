@@ -42,7 +42,13 @@ class ChangePasswordForm extends Component {
 
             API.put("/user/me/password", { oldPassword, newPassword, passwordConfirmation })
                 .then((res) => {
-                    const successAlert = <SweetAlert success title="Success!" confirmBtnText="Ok" onConfirm={() => history.push('/user/me')}>
+                    const successAlert = <SweetAlert 
+                                            success 
+                                            title="Success!" 
+                                            confirmBtnText="Ok" 
+                                            confirmBtnBsStyle="info" 
+                                            onConfirm={() => history.push('/user/me')}
+                                        >
                                             {res.data}
                                         </SweetAlert>
                     this.setState({

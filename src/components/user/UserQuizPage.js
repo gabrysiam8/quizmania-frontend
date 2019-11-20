@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import API from '../../utils/API';
 import QuizCard from '../common/QuizCard';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 class UserQuizPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             quizzes: [],
-            showDeleteAlert: false
+            alert: null
         };
 
         this.routeChange = this.routeChange.bind(this);
@@ -30,11 +31,16 @@ class UserQuizPage extends Component {
                 const updatedQuizzes = this.state.quizzes.filter((quiz) => {
                     return quiz.id !== id;
                 });
+
+                const successAlert = <SweetAlert 
+                                        success 
+                                        title="Quiz deleted!" 
+                                        confirmBtnText="Ok" 
+                                        confirmBtnBsStyle="info"
+                                        onConfirm={() => this.setState({ alert: null })}
+                                    />
               
-                this.setState({ quizzes: updatedQuizzes, showDeleteAlert: true });
-            })
-            .catch(err => {
-                console.log(err.response);
+                this.setState({ quizzes: updatedQuizzes, alert: successAlert });
             });
     }
 
@@ -55,11 +61,6 @@ class UserQuizPage extends Component {
             const alertVariant = location.state.quizAdded ? "success" : "danger";
             alert = <Alert variant={alertVariant} onClose={() => history.replace({ pathname: "/quiz", state: "" })} dismissible>
                         {location.state.message}
-                    </Alert>
-        }
-        else if(this.state.showDeleteAlert) {
-            alert = <Alert variant="danger" onClose={() => this.setState({ showDeleteAlert: false })} dismissible>
-                        Quiz deleted!
                     </Alert>
         }
         
@@ -90,6 +91,7 @@ class UserQuizPage extends Component {
                 >
                     Add quiz
                 </Button>
+                {this.state.alert}
             </div>
         );
     }
