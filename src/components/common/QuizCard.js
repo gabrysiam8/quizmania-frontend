@@ -17,7 +17,7 @@ export class QuizCard extends Component {
         return (
             <div className="quizCardWrapper">
             <Card className="quizCard">
-                <Card.Img variant="top" src={process.env.PUBLIC_URL + '/questionMark.svg'} />
+                <Card.Img variant="top" src={process.env.PUBLIC_URL + '/images/questionMark.svg'} />
                 <Card.Body>
                     <Card.Title>{this.props.quiz.title}</Card.Title>
                     <p>{this.props.quiz.description}</p>

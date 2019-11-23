@@ -44,7 +44,7 @@ class UserProfile extends Component {
                     :
                     <Fragment>
                         <Card className="userCard">
-                            <Card.Img variant="top" src={process.env.PUBLIC_URL + '/unknownUser.svg'} />
+                            <Card.Img variant="top" src={process.env.PUBLIC_URL + '/images/unknownUser.svg'} />
                             <Card.Body>
                                 <Card.Title>{user.username}</Card.Title>
                                 <Card.Subtitle>{user.email}</Card.Subtitle>
