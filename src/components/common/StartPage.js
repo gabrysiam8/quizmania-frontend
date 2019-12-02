@@ -16,7 +16,7 @@ class StartPage extends Component {
 
     async getDifficultyLevels() {
         return API
-            .get("/quiz/level")
+            .get("/level")
             .then(res => {
                 this.setState({ levels: res.data });
             })

@@ -123,7 +123,7 @@ export class QuizDetailsPage extends Component {
 
     async getQuizLevels() {
         return API
-            .get("/quiz/level")
+            .get("/level")
             .then(res => {
                 this.setState({ allLevels: res.data });
             });
