@@ -17,7 +17,6 @@ export class QuestionPlay extends Component {
 
     handleAnswerChange(event) {
         this.setState({ selectedAnswer: event.target.value });
-        this.refs.btn.removeAttribute("disabled");
     }
 
     loadQuestion() {
@@ -25,7 +24,8 @@ export class QuestionPlay extends Component {
             .then(res => {
                 this.setState({
                     question: res.data.question, 
-                    answers:res.data.answers,
+                    answers: res.data.answers,
+                    selectedAnswer: "",
                     loading: false
                 });
             })
@@ -75,10 +75,8 @@ export class QuestionPlay extends Component {
                     <Button 
                         ref="btn"
                         variant="outline-dark"
-                        onClick={(e) => {
-                            this.refs.btn.setAttribute("disabled", "disabled"); 
-                            this.props.handleNext(e, this.state.selectedAnswer);
-                        }}
+                        onClick={(e) => { this.props.handleNext(e, this.state.selectedAnswer); }}
+                        disabled={this.state.selectedAnswer===""}
                     >
                         Next
                     </Button>

@@ -40,28 +40,36 @@ class ChangePasswordForm extends Component {
             const { oldPassword, newPassword, passwordConfirmation } = this.state;
             const { history } = this.props;
 
-            API.put("/user/me/password", { oldPassword, newPassword, passwordConfirmation })
-                .then((res) => {
-                    const successAlert = <SweetAlert 
-                                            success 
-                                            title="Success!" 
-                                            confirmBtnText="Ok" 
-                                            confirmBtnBsStyle="info" 
-                                            onConfirm={() => history.push('/user/me')}
-                                        >
-                                            {res.data}
-                                        </SweetAlert>
-                    this.setState({
-                        alert: successAlert
-                    });
-                })
-                .catch(err => {
-                    this.setState({
-                        showMessage: true,
-                        message: err.response.data
-                    });
-                    this.refs.btn.removeAttribute("disabled");
+            if(newPassword !== passwordConfirmation) {
+                this.setState({
+                    showMessage: true,
+                    message: "The Password confirmation must match New password!"
                 });
+                this.refs.btn.removeAttribute("disabled");
+            } else {
+                API.put("/user/me/password", { oldPassword, newPassword, passwordConfirmation })
+                    .then((res) => {
+                        const successAlert = <SweetAlert 
+                                                success 
+                                                title="Success!" 
+                                                confirmBtnText="Ok" 
+                                                confirmBtnBsStyle="info" 
+                                                onConfirm={() => history.push('/user/me')}
+                                            >
+                                                {res.data}
+                                            </SweetAlert>
+                        this.setState({
+                            alert: successAlert
+                        });
+                    })
+                    .catch(err => {
+                        this.setState({
+                            showMessage: true,
+                            message: err.response.data
+                        });
+                        this.refs.btn.removeAttribute("disabled");
+                    });
+            }
         }
         this.setState({ validated: true });
     }
@@ -75,13 +83,13 @@ class ChangePasswordForm extends Component {
                         <Form.Control required type="password" name="oldPassword" placeholder="Old password" onChange={this.handleChange}/>
                     </Form.Group>
 
-                    <Form.Group controlId="newPassword">
+                    <Form.Group controlId="password">
                         <Form.Label>New password</Form.Label>
                         <Form.Control required type="password" name="newPassword" placeholder="New password" minLength="4" onChange={this.handleChange}/>
                         <PasswordStrengthBar password={this.state.newPassword} />
                     </Form.Group>
             
-                    <Form.Group controlId="password">
+                    <Form.Group controlId="passwordConfirmation">
                         <Form.Label>Password confirmation</Form.Label>
                         <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" minLength="4" onChange={this.handleChange}/>
                     </Form.Group>

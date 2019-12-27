@@ -13,6 +13,7 @@ class RegisterForm extends Component {
             email: "",
             username: "",
             password: "",
+            passwordConfirmation: "",
             validated: false,
             emailModal: false,
             showMessage: false,
@@ -37,23 +38,31 @@ class RegisterForm extends Component {
           event.stopPropagation();
         } else {
             this.refs.btn.setAttribute("disabled", "disabled");
-            const { email, username, password } = this.state;
+            const { email, username, password, passwordConfirmation } = this.state;
 
-            AuthService
-                .register(email, username, password)
-                .then(() => {
-                    this.setState({
-                        emailModal: <EmailModal hide={this.hideModal} email={email} type="activate your account"/>
-                    });
-                    this.refs.btn.removeAttribute("disabled");
-                })
-                .catch(err => {
-                    this.setState({
-                        showMessage: true,
-                        message: err.response.data
-                    });
-                    this.refs.btn.removeAttribute("disabled");
+            if(password !== passwordConfirmation) {
+                this.setState({
+                    showMessage: true,
+                    message: "The Password confirmation must match Password!"
                 });
+                this.refs.btn.removeAttribute("disabled");
+            } else {
+                AuthService
+                    .register(email, username, password, passwordConfirmation)
+                    .then(() => {
+                        this.setState({
+                            emailModal: <EmailModal hide={this.hideModal} email={email} type="activate your account"/>
+                        });
+                        this.refs.btn.removeAttribute("disabled");
+                    })
+                    .catch(err => {
+                        this.setState({
+                            showMessage: true,
+                            message: err.response.data
+                        });
+                        this.refs.btn.removeAttribute("disabled");
+                    });
+            }
         }
         this.setState({ validated: true });
     }
@@ -83,6 +92,11 @@ class RegisterForm extends Component {
                         <Form.Label>Password</Form.Label>
                         <Form.Control required type="password" name="password" placeholder="Password" minLength="4" onChange={this.handleChange}/>
                         <PasswordStrengthBar password={this.state.password} />
+                    </Form.Group>
+
+                    <Form.Group controlId="passwordConfirmation">
+                        <Form.Label>Password confirmation</Form.Label>
+                        <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" minLength="4" onChange={this.handleChange}/>
                     </Form.Group>
                     
                     <Button ref="btn" variant="info" type="submit">

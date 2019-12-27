@@ -21,8 +21,8 @@ class AuthService {
         localStorage.clear();
     }
 
-    register(email, username, password) {
-        return API.post("auth/register", { email, username, password });
+    register(email, username, password, passwordConfirmation) {
+        return API.post("auth/register", { email, username, password, passwordConfirmation });
     }
 
     isAuthenticated() {

@@ -44,32 +44,39 @@ export class ResetPasswordForm extends Component {
           event.stopPropagation();
         } else {
             this.refs.btn.setAttribute("disabled", "disabled"); 
-
             const { userId, newPassword, passwordConfirmation } = this.state;
 
-            API.put("/user/"+userId+"/password", { newPassword, passwordConfirmation })
-                .then((res) => {
-                    const successAlert = <SweetAlert 
-                                            success 
-                                            title="Success!" 
-                                            confirmBtnText="Log in" 
-                                            confirmBtnBsStyle="info" 
-                                            onConfirm={this.onConfirm}
-                                        >
-                                            Password was successfully reset!
-                                        </SweetAlert>
-                    this.setState({
-                        alert: successAlert
-                    });
-                   
-                })
-                .catch(err => {
-                    this.setState({
-                        showMessage: true,
-                        message: err.response.data
-                    });
-                    this.refs.btn.removeAttribute("disabled");
+            if(newPassword !== passwordConfirmation) {
+                this.setState({
+                    showMessage: true,
+                    message: "The Password confirmation must match New password!"
                 });
+                this.refs.btn.removeAttribute("disabled");
+            } else {
+                API.put("/user/"+userId+"/password", { newPassword, passwordConfirmation })
+                    .then((res) => {
+                        const successAlert = <SweetAlert 
+                                                success 
+                                                title="Success!" 
+                                                confirmBtnText="Log in" 
+                                                confirmBtnBsStyle="info" 
+                                                onConfirm={this.onConfirm}
+                                            >
+                                                Password was successfully reset!
+                                            </SweetAlert>
+                        this.setState({
+                            alert: successAlert
+                        });
+                    
+                    })
+                    .catch(err => {
+                        this.setState({
+                            showMessage: true,
+                            message: err.response.data
+                        });
+                        this.refs.btn.removeAttribute("disabled");
+                    });
+                }
         }
         this.setState({ validated: true });
     }
@@ -99,13 +106,13 @@ export class ResetPasswordForm extends Component {
             <div className="ChangePasswordForm">
                 {this.state.showForm ?
                     <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-                        <Form.Group controlId="newPassword">
+                        <Form.Group controlId="password">
                             <Form.Label>New password</Form.Label>
                             <Form.Control required type="password" name="newPassword" placeholder="New password" minLength="4" onChange={this.handleChange}/>
                             <PasswordStrengthBar password={this.state.newPassword} />
                         </Form.Group>
                 
-                        <Form.Group controlId="password">
+                        <Form.Group controlId="passwordConfirmation">
                             <Form.Label>Password confirmation</Form.Label>
                             <Form.Control required type="password" name="passwordConfirmation" placeholder="Password confirmation" minLength="4" onChange={this.handleChange}/>
                         </Form.Group>
