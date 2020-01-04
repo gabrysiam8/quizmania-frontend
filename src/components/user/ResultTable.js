@@ -30,7 +30,7 @@ export class ResultTable extends Component {
             quizId: quizId,
             attemptsNum: attemptsNum,
             lastAttemptDate: lastResult.startDate,
-            lastScore: lastResult.percentageScore,
+            lastScore: Math.round(lastResult.percentageScore),
         }
         return API
                 .get("/quiz/"+quizId+"?fields=title")
